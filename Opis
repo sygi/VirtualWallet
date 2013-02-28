@@ -6,4 +6,4 @@ Co chccę, żeby tam byłó:
 5. wyświetlanie: aktualnego łącznego kosztu, stanu wirtualnego portfela
 6. waluty
 7. ang/pol
-8. integracja z kontaktami, użycie bazy danych sqlite
+8. integracja z kontaktami, wysylanie maili przy rozliczaniu, użycie bazy danych sqlite
