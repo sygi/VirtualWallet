@@ -1,14 +1,70 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     tools:context=".WalletScreen" >
 
-    <TextView
+	<RelativeLayout
+	    android:id="@+id/wallet_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+
+    <TextView        
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"
+        android:text="@string/wallet_state"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+     <TextView        
+        android:id="@+id/person_table"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView1"
+        android:text="."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
+     <Button
+         android:id="@+id/button1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/person_table"
+         android:layout_centerHorizontal="true"
+         android:text="@string/new_trans"
+         android:onClick="newTransaction" />
+     <Button
+         android:id="@+id/button2"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/button1"
+         android:layout_centerHorizontal="true"
+         android:text="@string/new_person"
+         android:onClick="addPerson" />
+     <Button
+         android:id="@+id/button3"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/button2"
+         android:text="@string/rem_person" 
+         android:layout_centerHorizontal="true"
+         android:onClick="removePerson"/>
+	 <Button
+         android:id="@+id/button4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/button3"
+         android:layout_centerHorizontal="true"
+         android:text="@string/log" 
+         android:onClick="showHistory"/>
+     <Button
+         android:id="@+id/button5"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/button4"
+         android:layout_centerHorizontal="true"
+         android:text="@string/exit"
+         android:onClick="exit" />
+    
 </RelativeLayout>
+</ScrollView>

@@ -1,12 +1,16 @@
 package com.example.virtualwallet;
 
-import android.os.Build;
-import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.text.Html;
+import android.text.SpannableString;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import android.view.View;
+import android.widget.TextView;
 /**
  * Glowny ekran aplikacji - wyswietla aktualny stan portfela, laczny koszt wyjazdu
  * umozliwia dodawanie nowych osob, rozliczanie aktualnych, etc, etc
@@ -19,11 +23,13 @@ public class WalletScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wallet_screen);
+		setTitle(Data.actWal.getName());
 		// Show the Up button in the action bar.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			// Show the Up button in the action bar.
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
+		actualize();
 	}
 
 	@Override
@@ -48,6 +54,41 @@ public class WalletScreen extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void actualize(){
+		TextView wall = (TextView) findViewById(R.id.textView1);
+		if (Data.actWal.people.get(0).paid == 0.0)
+			wall.setText(getString(R.string.wallet_state) + " 0.0"); //zeby uniknac -0.0
+		else
+			wall.setText(getString(R.string.wallet_state) + " " + (-Data.actWal.people.get(0).paid));
+		
+		TextView table = (TextView) findViewById(R.id.person_table);
+		String state = "";
+		for(Person p : Data.actWal.people){
+			state += p;
+		}
+		table.setText(Html.fromHtml(state));
+	}
+	
+	public void exit(View view){
+		finish();
+	}
+	
+	public void newTransaction(View view){
+		
+	}
+	
+	public void addPerson(View view){
+		
+	}
+	
+	public void removePerson(View view){
+		
+	}
+	
+	public void showHistory(View view){
+		
 	}
 
 }

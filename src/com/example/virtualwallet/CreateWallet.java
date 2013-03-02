@@ -13,6 +13,7 @@ import android.widget.TextView;
 //w tej klasie nie ustawilem parentClass, nie wiem, czy to cos daje?
 public class CreateWallet extends Activity {
 
+	//TODO zrobic tak, zeby ok bylo na samym dole, ale zeby sie nie scrollowalo
 	Wallet wal;
 	RelativeLayout personList;
 	public final static int CREATE_PERSON = 12;

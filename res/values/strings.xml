@@ -6,7 +6,7 @@
     <string name="settings">Settings</string>
     <string name="new_wallet">New wallet</string>
     <string name="load_wallet">Load wallet</string>
-    <string name="authors">Credits</string>
+    <string name="authors">Jakub Sygnowski, March 2013</string>
     <string name="exit">Exit</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_credits">CreditsActivity</string>
@@ -21,5 +21,11 @@
     <string name="mail">mail (optional)</string>
     <string name="person_name">Name Surname</string>
     <string name="read_contacts">Read from contacts</string>
+    <string name="credits">Credits</string>
+    <string name="wallet_state">Wallet state:</string>
+    <string name="new_trans">New transaction</string>
+    <string name="add_person">Add person</string>
+    <string name="rem_person">Remove person</string>
+    <string name="log">Payment history</string>
 
 </resources>

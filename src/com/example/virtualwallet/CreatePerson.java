@@ -16,9 +16,6 @@ import android.widget.EditText;
  * osoba ma tylko dwie dane - nazwe (imie i nazwisko)
  * oraz mail (opcjonalny)
  * 
- *  W przyszlosci ma byc zamienione na wybieranie osob z kontaktow
- *  (albo na taka mozliwosc)
- * 
  * @author Jakub Sygnowski
  *
  */
@@ -43,6 +40,8 @@ public class CreatePerson extends Activity {
 		EditText nm = (EditText) findViewById(R.id.editText1);
 		EditText ml = (EditText) findViewById(R.id.editText2);
 		//TODO zabezpieczyc sie przed pustym nm.getText().toString()
+		//TODO i przed osoba o imieniu 'wallet'
+		//TODO i przed wieloma osobami o tym samym imieniu
 		i.putExtra("name", nm.getText().toString());
 		i.putExtra("mail", ml.getText().toString());
 		setResult(RESULT_OK, i);
@@ -75,15 +74,17 @@ public class CreatePerson extends Activity {
 			Cursor mail = getContentResolver().query(
 					ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
 					ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + id, null, null);
-			mail.moveToFirst();
-			String email = mail.getString(
+			
+			if (mail.getCount() != 0){
+				mail.moveToFirst();
+				String email = mail.getString(
 					mail.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+				EditText editEmail = (EditText) findViewById(R.id.editText2);
+				editEmail.setText(email);
+			}
 			
-			EditText editName = (EditText) findViewById(R.id.editText1);
-			editName.setText(name);
-			
-			EditText editEmail = (EditText) findViewById(R.id.editText2);
-			editEmail.setText(email);
+				EditText editName = (EditText) findViewById(R.id.editText1);
+				editName.setText(name);
 		}
 	}
 }

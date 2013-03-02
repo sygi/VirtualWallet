@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Wallet {
-	private ArrayList<Person> people;
+	public ArrayList<Person> people;
 	private ArrayList<Transaction> trans;
-	public String name;
+	private String name;
 	private Date creationTime;
 	
 	
@@ -14,6 +14,7 @@ public class Wallet {
 		name = "";
 		creationTime = new Date();
 		people = new ArrayList<Person>();
+		people.add(new Person("wallet")); //zawsze pierwsza osoba jest wallet
 		trans = new ArrayList<Transaction>();
 	}
 	
@@ -38,6 +39,10 @@ public class Wallet {
 	
 	public void setName(String name){
 		this.name = name;
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 	String getLog(){
