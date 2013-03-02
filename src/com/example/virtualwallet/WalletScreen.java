@@ -2,11 +2,12 @@ package com.example.virtualwallet;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
-import android.text.SpannableString;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.TextView;
  */
 public class WalletScreen extends Activity {
 
+	private static final int NEW_PERSON = 10;
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class WalletScreen extends Activity {
 			state += p;
 		}
 		table.setText(Html.fromHtml(state));
+		View layout = (View) findViewById(R.id.wallet_layout);
+		layout.invalidate();
 	}
 	
 	public void exit(View view){
@@ -76,11 +80,15 @@ public class WalletScreen extends Activity {
 	}
 	
 	public void newTransaction(View view){
-		
+		Intent i = new Intent(this, CreateTransaction.class);
+		startActivity(i);
+		actualize();
 	}
 	
 	public void addPerson(View view){
-		
+		Intent i = new Intent(this, CreatePerson.class);
+		startActivityForResult(i, NEW_PERSON);
+		//aktualizacja - w onResult
 	}
 	
 	public void removePerson(View view){
@@ -89,6 +97,19 @@ public class WalletScreen extends Activity {
 	
 	public void showHistory(View view){
 		
+	}
+	
+	protected void onActivityResult (int requestCode, int resultCode, Intent data){
+		if (resultCode == RESULT_CANCELED){
+			Log.d("sygi", "result cancelled");
+			return;
+		}
+		
+		if (requestCode == NEW_PERSON){
+			Data.actWal.addPerson(new Person(data.getStringExtra("name"), data.getStringExtra("mail")));
+			Log.d("sygi", "dodalem osobe do portfela");
+			actualize();
+		}
 	}
 
 }

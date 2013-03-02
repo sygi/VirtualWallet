@@ -27,5 +27,6 @@
     <string name="add_person">Add person</string>
     <string name="rem_person">Remove person</string>
     <string name="log">Payment history</string>
+    <string name="title_activity_create_transaction">Create a transaction</string>
 
 </resources>
