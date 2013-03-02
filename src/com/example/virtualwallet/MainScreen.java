@@ -3,6 +3,7 @@ package com.example.virtualwallet;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
 
 public class MainScreen extends Activity {
 
@@ -18,5 +19,25 @@ public class MainScreen extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main_screen, menu);
 		return true;
 	}
+	
+	 public void exit(View view) {
+	     finish();
+	 }
+	 
+	 public void authors(View view) {
+	     
+	 }
+	 
+	 public void settings(View view) {
+	     
+	 }
+	 
+	 public void newWallet(View view) {
+	     
+	 }
+	 
+	 public void loadWallet(View view) {
+
+	 }
 
 }
