@@ -15,12 +15,41 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.virtualwallet.MainScreen"
-            android:label="@string/app_name" android:configChanges="orientation">
+            android:configChanges="orientation"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.virtualwallet.CreditsActivity"
+            android:label="@string/title_activity_credits"
+            android:parentActivityName="com.example.virtualwallet.MainScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.virtualwallet.MainScreen" />
+        </activity>
+        <activity
+            android:name="com.example.virtualwallet.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="com.example.virtualwallet.MainScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.virtualwallet.MainScreen" />
+        </activity>
+        <activity
+            android:name="com.example.virtualwallet.CreateWallet"
+            android:label="@string/title_activity_create_wallet" >
+        </activity>
+        <activity
+            android:name="com.example.virtualwallet.LoadWallet"
+            android:label="@string/title_activity_load_wallet"
+            android:parentActivityName="com.example.virtualwallet.MainScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.virtualwallet.MainScreen" />
         </activity>
     </application>
 
