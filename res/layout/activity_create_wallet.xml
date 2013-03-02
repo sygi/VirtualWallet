@@ -5,7 +5,7 @@
     tools:context=".CreateWallet" >
     
 	<EditText
-	    android:id="@+id/editText1"
+	    android:id="@+id/wallet_name"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:inputType="text"
@@ -18,15 +18,15 @@
 	    android:id="@+id/person_name_layout"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:orientation="vertical"
+	    android:layout_below="@id/wallet_name"
 	    android:layout_centerHorizontal="true"
-	    android:layout_below="@id/editText1" >
+	    android:orientation="vertical" >
+
 	       <Button
-       android:id="@+id/button5"
+       android:id="@+id/add_person"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_centerHorizontal="true"
-       android:gravity="center"
        android:text="@string/new_person"
        android:onClick="getPerson" />
 	    
@@ -38,6 +38,7 @@
        android:layout_height="wrap_content"
        android:layout_below="@+id/person_name_layout"
        android:layout_centerHorizontal="true"
-       android:text="@string/ok" />
+       android:text="@string/ok"
+       android:onClick="forward" />
 
 </RelativeLayout>

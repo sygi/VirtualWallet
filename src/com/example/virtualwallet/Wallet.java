@@ -24,12 +24,20 @@ public class Wallet {
 		trans = new ArrayList<Transaction>();
 	}
 	
-	void addPerson(Person a){
+	public void addPerson(Person a){
 		people.add(a);
 	}
 	
-	void addTransaction(Transaction a){
+	public void addTransaction(Transaction a){
 		trans.add(a);
+	}
+	
+	public int personCount(){
+		return people.size();
+	}
+	
+	public void setName(String name){
+		this.name = name;
 	}
 	
 	String getLog(){
