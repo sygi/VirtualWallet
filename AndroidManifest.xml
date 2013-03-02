@@ -51,6 +51,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.virtualwallet.MainScreen" />
         </activity>
+        <activity
+            android:name="com.example.virtualwallet.CreatePerson"
+            android:label="@string/title_activity_create_person" >
+        </activity>
+        <activity
+            android:name="com.example.virtualwallet.WalletScreen"
+            android:label="@string/title_activity_wallet_screen"
+            android:parentActivityName="com.example.virtualwallet.MainScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.virtualwallet.MainScreen" />
+        </activity>
     </application>
 
 </manifest>

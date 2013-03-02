@@ -15,5 +15,4 @@ public class Person {
 		mail = ml;
 		paid = 0.0;
 	}
-	
 }

@@ -14,5 +14,11 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_create_wallet">Create a new wallet</string>
     <string name="title_activity_load_wallet">Load a wallet</string>
+    <string name="wallet_name">Wallet name</string>
+    <string name="new_person">Add person</string>
+    <string name="title_activity_create_person">Create a new person</string>
+    <string name="title_activity_wallet_screen">Virtual Wallet</string>
+    <string name="mail">mail (optional)</string>
+    <string name="person_name">Name Surname</string>
 
 </resources>

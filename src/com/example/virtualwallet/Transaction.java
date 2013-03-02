@@ -25,6 +25,7 @@ public class Transaction {
 	}
 	
 	public String getDesc(){
+		//zmienic na SimpleDateFormat.format
 		return time.toLocaleString() + desc;
 		//to trzeba bedzie pewnie zmienic w zaleznosci od UI
 	}
