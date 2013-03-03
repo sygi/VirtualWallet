@@ -33,7 +33,7 @@ public class CreateTransaction extends Activity {
 		for(Fee a : trans.charge){
 			a.who.paid += a.paid;
 		}
-		
+		setResult(RESULT_OK);
 		finish();
 	}
 	

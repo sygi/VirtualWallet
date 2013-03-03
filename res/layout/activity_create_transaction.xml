@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="@string/who_pays" />
-    
+
     <TextView
         android:id="@+id/payment_list"
         android:layout_width="wrap_content"
@@ -37,35 +37,38 @@
         android:layout_centerHorizontal="true"
         android:text="@string/for_whom" />
     
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView3"
+        android:layout_alignLeft="@id/button1" >
+
     <RadioButton
         android:id="@+id/radioButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:layout_alignLeft="@id/button1"
         android:text="@string/all_people" />
 
     <RadioButton
         android:id="@+id/radioButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/radioButton1"
-        android:layout_below="@+id/radioButton1"
         android:text="@string/to_wallet" />
 
     <RadioButton
         android:id="@+id/radioButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/radioButton2"
-        android:layout_below="@+id/radioButton2"
         android:text="@string/some" />
 
+    </RadioGroup>
+    
     <EditText
         android:id="@+id/trans_desc"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/radioButton3"
+        android:layout_below="@id/radioGroup1"
         android:layout_centerHorizontal="true"
         android:ems="15"
         android:hint="@string/description" >
@@ -80,6 +83,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/ok"
         android:onClick="exit" />
+
 
 
 </RelativeLayout>
