@@ -24,6 +24,12 @@ public class Transaction {
 		this.charge = charge;
 	}
 	
+	Transaction(){
+		time = new Date();
+		this.desc = "";
+		charge = new ArrayList<Fee>();
+	}
+	
 	public String getDesc(){
 		//zmienic na SimpleDateFormat.format
 		return time.toLocaleString() + desc;

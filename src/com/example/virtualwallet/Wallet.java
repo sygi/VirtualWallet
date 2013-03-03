@@ -25,6 +25,14 @@ public class Wallet {
 		trans = new ArrayList<Transaction>();
 	}
 	
+	public String[] getNames(){
+		String[] tab = new String[people.size()];
+		for(int i = 0; i < people.size(); i++){
+			tab[i] = people.get(i).name;
+		}
+		return tab;
+	}
+	
 	public void addPerson(Person a){
 		people.add(a);
 	}

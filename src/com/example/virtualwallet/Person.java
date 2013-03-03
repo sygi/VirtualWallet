@@ -22,7 +22,7 @@ public class Person {
 	@Override
 	public String toString(){
 		//TODO - skracanie z dokladnoscia do 2 miejsc po przecinku
-		String paidDesc = (Double.valueOf(Math.round(paid * 100)/100.0)).toString();
+		//String paidDesc = (Double.valueOf(Math.round(paid * 100)/100.0)).toString();
 		
 
 		if (name == "wallet"){

@@ -70,6 +70,10 @@
             android:name="com.example.virtualwallet.CreateTransaction"
             android:label="@string/title_activity_create_transaction" >
         </activity>
+        <activity
+            android:name="com.example.virtualwallet.ChoosePayant"
+            android:label="@string/title_activity_choose_payant" >
+        </activity>
     </application>
 
 </manifest>

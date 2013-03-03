@@ -28,5 +28,16 @@
     <string name="rem_person">Remove person</string>
     <string name="log">Payment history</string>
     <string name="title_activity_create_transaction">Create a transaction</string>
+    <string name="who_pays">Payants:</string>
+    <string name="add_payant">Add payant</string>
+    <string name="all_people">Everybody</string>
+    <string name="to_wallet">To wallet</string>
+    <string name="some">Some people</string>
+    <string name="for_whom">For whom:</string>
+    <string name="title_activity_choose_payant">ChoosePayant</string>
+    <string name="choose_p">Choose payant</string>
+    <string name="name">Name</string>
+    <string name="amount">Amount</string>
+    <string name="description">Short description</string>
 
 </resources>
