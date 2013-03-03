@@ -7,6 +7,7 @@ public class Person {
 	String name; //specjalna osoba o name = wallet - oznacza wirtualny portfel
 	Double paid;
 	String mail;
+	
 	Person(String nm){
 		name = nm;
 		paid = 0.0;

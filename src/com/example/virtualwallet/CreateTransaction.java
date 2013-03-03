@@ -3,6 +3,7 @@ package com.example.virtualwallet;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -25,15 +26,20 @@ public class CreateTransaction extends Activity {
 	}
 	
 	public void exit(View view){
+		Log.d("sygi", "dodaje transakcje do porftela");
+		//TODO zapisywanie stanu do portfela (Data.actWal)
+		Data.actWal.addTransaction(trans);
 		
-		//TODO zapisywanie stanu do portfela (Data.wallet)
+		for(Fee a : trans.charge){
+			a.who.paid += a.paid;
+		}
+		
 		finish();
 	}
 	
 	public void addPayant(View view){
 		Intent i = new Intent(this, ChoosePayant.class);
 		startActivityForResult(i, CHOOSE_PAYANT);
-		//TODO parse
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -42,6 +48,18 @@ public class CreateTransaction extends Activity {
 		}
 		if (requestCode == CHOOSE_PAYANT){
 			//TODO - zbiera kwote (sum) i imie (name) i dodaje do tworzonej tranzakcji odpowiednie fee
+			String name = data.getStringExtra("name");
+			Log.d("sygi", "podano osobe " + name);
+			Double amount = Double.valueOf(data.getDoubleExtra("amount", 0.0));
+			Person p = null;
+			try {
+				p = Data.actWal.findPerson(name);
+			} catch (Exception e) {
+				Log.d("sygi", "nie ma takiej osoby " + name);
+				e.printStackTrace();
+			}
+			Fee some = new Fee(p, amount);
+			trans.charge.add(some);
 		}
 	}
 }

@@ -20,6 +20,7 @@ import android.widget.TextView;
 public class WalletScreen extends Activity {
 
 	private static final int NEW_PERSON = 10;
+	private static final int NEW_TRANS = 19;
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +82,8 @@ public class WalletScreen extends Activity {
 	
 	public void newTransaction(View view){
 		Intent i = new Intent(this, CreateTransaction.class);
-		startActivity(i);
-		actualize();
+		startActivityForResult(i, NEW_TRANS);
+		//actualize();
 	}
 	
 	public void addPerson(View view){
@@ -108,6 +109,9 @@ public class WalletScreen extends Activity {
 		if (requestCode == NEW_PERSON){
 			Data.actWal.addPerson(new Person(data.getStringExtra("name"), data.getStringExtra("mail")));
 			Log.d("sygi", "dodalem osobe do portfela");
+			actualize();
+		} else if (requestCode == NEW_TRANS){
+			//synchronicznie
 			actualize();
 		}
 	}

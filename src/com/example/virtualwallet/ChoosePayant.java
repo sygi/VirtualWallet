@@ -3,10 +3,12 @@ package com.example.virtualwallet;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 public class ChoosePayant extends Activity {
 
@@ -28,9 +30,18 @@ public class ChoosePayant extends Activity {
 	}
 	
 	public void exit(View view){
-		//TODO
+		//TODO parsowanie
 		Intent res = new Intent();
-//		res.putExtra(name, value);
+		AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
+		res.putExtra("name", tv.getText().toString()); //wazne! bez .toString() nie dziala - problem z konwersja typow
+		Log.d("sygi", "wybrano osobe " + tv.getText());
+		
+		EditText sum = (EditText) findViewById(R.id.sum);
+		if (sum.getText().toString().equals(""))
+			res.putExtra("amount", 0.0);
+		else 
+			res.putExtra("amount", Double.valueOf(sum.getText().toString()));
+		
 		setResult(RESULT_OK, res);
 		finish();
 	}

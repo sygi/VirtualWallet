@@ -3,6 +3,8 @@ package com.example.virtualwallet;
 import java.util.ArrayList;
 import java.util.Date;
 
+import android.util.Log;
+
 public class Wallet {
 	public ArrayList<Person> people;
 	private ArrayList<Transaction> trans;
@@ -51,6 +53,16 @@ public class Wallet {
 	
 	public String getName(){
 		return name;
+	}
+	
+	public Person findPerson(String name) throws Exception{
+		Log.d("sygi", "szukam " + name);
+		for(Person p : people){
+			Log.d("sygi", "osoba" + p.name);
+			if (p.name.equals(name))
+				return p;
+		}
+		throw new Exception("No such person");
 	}
 	
 	String getLog(){
