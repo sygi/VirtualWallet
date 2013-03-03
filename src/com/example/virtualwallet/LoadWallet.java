@@ -1,12 +1,18 @@
 package com.example.virtualwallet;
 
-import android.os.Build;
-import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class LoadWallet extends Activity {
 
@@ -19,6 +25,16 @@ public class LoadWallet extends Activity {
 			// Show the Up button in the action bar.
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
+		//tworze liste walletow
+		String[] list = new String[Data.wallet.size()];
+		for(int i = 0; i < Data.wallet.size(); i++){
+			list[i] = Data.wallet.get(i).getName();
+		}
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 
+		        android.R.layout.simple_list_item_1, list);
+		ListView lv = (ListView) findViewById(R.id.listView1);
+		lv.setAdapter(adapter);
+		lv.setOnItemClickListener(mMessageClickedHandler); 
 	}
 
 	@Override
@@ -43,6 +59,19 @@ public class LoadWallet extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private OnItemClickListener mMessageClickedHandler = new OnItemClickListener() {
+	    public void onItemClick(AdapterView parent, View v, int position, long id) {
+	        //TODO - wybieranie potfela
+	    	Log.d("sygi", position + "kliknieta");
+	    }
+	};
+
+	
+	
+	public void exit(View view){
+		finish();
 	}
 
 }
