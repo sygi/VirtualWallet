@@ -4,33 +4,32 @@
     android:layout_height="match_parent"
     tools:context=".ChoosePayant" >
 
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <RadioButton
+            android:id="@+id/radio0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/person" />
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/from_wallet" />
+    </RadioGroup>
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-    <AutoCompleteTextView
-        android:id="@+id/payantName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="@string/choose_p" >
-
-        <requestFocus />
-    </AutoCompleteTextView>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/payantName"
+        android:layout_below="@id/radioGroup1"
         android:text="@string/amount"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -38,7 +37,7 @@
         android:id="@+id/sum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@id/textView1"
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="numberDecimal" />
@@ -51,5 +50,14 @@
         android:layout_centerHorizontal="true"
         android:text="@string/ok"
         android:onClick="exit" />
+
+    <AutoCompleteTextView
+        android:id="@+id/payantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/radioGroup1"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/choose_p" />
 
 </RelativeLayout>

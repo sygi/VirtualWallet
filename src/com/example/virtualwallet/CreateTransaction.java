@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 public class CreateTransaction extends Activity {
 
@@ -26,6 +28,22 @@ public class CreateTransaction extends Activity {
 	}
 	
 	public void exit(View view){
+		Log.d("sygi", "ustawiam koszty");
+		Double cost = 0.0;
+		for(Fee f : trans.charge){
+			cost += f.paid; //zakladam, ze tu na razie jest tylko to, co ludzie zaplacili
+		}
+		RadioButton rb = (RadioButton) findViewById(R.id.radioButton1);
+		if (rb.isChecked()){
+			//wszyscy
+			cost /= (Data.actWal.people.size()-1); //na osobe, zakladam, ze jest wirtualny portfel
+			
+			for(Person p : Data.actWal.people){
+				if (p.name != "wallet")
+				trans.charge.add(new Fee(p, -cost));
+			}
+		}
+		
 		Log.d("sygi", "dodaje transakcje do porftela");
 		//TODO zapisywanie stanu do portfela (Data.actWal)
 		Data.actWal.addTransaction(trans);
@@ -60,6 +78,8 @@ public class CreateTransaction extends Activity {
 			}
 			Fee some = new Fee(p, amount);
 			trans.charge.add(some);
+			TextView tv = (TextView) findViewById(R.id.payment_list);
+			tv.setText(tv.getText() + some.toString());
 		}
 	}
 }

@@ -39,5 +39,7 @@
     <string name="name">Name</string>
     <string name="amount">Amount</string>
     <string name="description">Short description</string>
+    <string name="person">Person</string>
+    <string name="from_wallet">From wallet</string>
 
 </resources>

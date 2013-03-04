@@ -8,4 +8,8 @@ public class Fee {
 		who = p;
 		paid = q;
 	}
+	
+	public String toString(){
+		return who + " " + paid + "\n";
+	}
 }

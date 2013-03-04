@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class ChoosePayant extends Activity {
 
@@ -32,10 +34,18 @@ public class ChoosePayant extends Activity {
 	public void exit(View view){
 		//TODO parsowanie
 		Intent res = new Intent();
-		AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
-		res.putExtra("name", tv.getText().toString()); //wazne! bez .toString() nie dziala - problem z konwersja typow
-		Log.d("sygi", "wybrano osobe " + tv.getText());
+		RadioButton rb = (RadioButton) findViewById(R.id.radio0);
+		if (rb.isChecked()){ //placi osoba
+			//TODO - sprawdzic, ze jeszcze nie placila
+			AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
+			res.putExtra("name", tv.getText().toString()); //wazne! bez .toString() nie dziala - problem z konwersja typow
+			Log.d("sygi", "wybrano osobe " + tv.getText());
+		} else {
+			Log.d("sygi", "wybrano placenie z portfela");
+			res.putExtra("name", "wallet");
+		}
 		
+		//TODO sprawdzic, ze wprowadzone sa sensowne, dodatnie dane
 		EditText sum = (EditText) findViewById(R.id.sum);
 		if (sum.getText().toString().equals(""))
 			res.putExtra("amount", 0.0);
