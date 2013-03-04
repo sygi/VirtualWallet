@@ -10,6 +10,6 @@ public class Fee {
 	}
 	
 	public String toString(){
-		return who + " " + paid + "\n";
+		return who.name + " " + paid + "\n";
 	}
 }

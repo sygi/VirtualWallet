@@ -35,6 +35,6 @@ public class Person {
 		if (paid > 0.0){
 			return name + " <font color=\"green\">" + paid + "</font><br/>";
 		}
-		return name + " font color=\"red\">" + paid + "</font><br/>";
+		return name + " <font color=\"red\">" + paid + "</font><br/>";
 	}
 }
