@@ -41,5 +41,8 @@
     <string name="description">Short description</string>
     <string name="person">Person</string>
     <string name="from_wallet">From wallet</string>
+    <string name="no_amount">Enter amount</string>
+    <string name="too_much">Wallet doesn\'t contain so much money</string>
+    <string name="negative_value">You can\'t pay a negative amount of money</string>
 
 </resources>

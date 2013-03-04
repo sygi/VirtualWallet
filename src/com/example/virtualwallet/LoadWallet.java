@@ -2,6 +2,7 @@ package com.example.virtualwallet;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -63,12 +64,17 @@ public class LoadWallet extends Activity {
 	
 	private OnItemClickListener mMessageClickedHandler = new OnItemClickListener() {
 	    public void onItemClick(AdapterView parent, View v, int position, long id) {
-	        //TODO - wybieranie potfela
 	    	Log.d("sygi", position + "kliknieta");
+	    	startWallet(position);
 	    }
 	};
 
-	
+	private void startWallet(int x){
+    	Data.actWal = Data.wallet.get(x);
+    	Intent i = new Intent(this, WalletScreen.class);
+    	startActivity(i);
+    	finish();
+	}
 	
 	public void exit(View view){
 		finish();

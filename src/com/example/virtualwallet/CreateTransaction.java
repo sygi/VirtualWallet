@@ -42,6 +42,14 @@ public class CreateTransaction extends Activity {
 				if (p.name != "wallet")
 				trans.charge.add(new Fee(p, -cost));
 			}
+		} else {
+			RadioButton rb2 = (RadioButton) findViewById(R.id.radioButton2);
+			if (rb2.isChecked()){
+				//do portfela
+				trans.charge.add(new Fee(Data.actWal.people.get(0), -cost)); //0 - wallet, zakladam ze jest ciagle niedodatni
+			} else {
+				//TODO - pewien zbior osob
+			}
 		}
 		
 		Log.d("sygi", "dodaje transakcje do porftela");

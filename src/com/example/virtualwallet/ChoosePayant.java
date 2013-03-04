@@ -1,6 +1,8 @@
 package com.example.virtualwallet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,34 @@ public class ChoosePayant extends Activity {
 		//TODO parsowanie
 		Intent res = new Intent();
 		RadioButton rb = (RadioButton) findViewById(R.id.radio0);
+		EditText sum = (EditText) findViewById(R.id.sum);
+		Double amo = 0.0;
+		if (sum.getText().toString().equals("")){
+			AlertDialog.Builder build = new AlertDialog.Builder(this);
+			build.setMessage(R.string.no_amount)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									dialog.cancel();
+								}
+							}).show();
+			return;
+		}
+		amo = Double.valueOf(sum.getText().toString());
+		if (amo < 0.0){
+			AlertDialog.Builder build = new AlertDialog.Builder(this);
+			build.setMessage(R.string.negative_value)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									dialog.cancel();
+								}
+							}).show();
+			return;
+		}
+		
 		if (rb.isChecked()){ //placi osoba
 			//TODO - sprawdzic, ze jeszcze nie placila
 			AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
@@ -43,14 +73,22 @@ public class ChoosePayant extends Activity {
 		} else {
 			Log.d("sygi", "wybrano placenie z portfela");
 			res.putExtra("name", "wallet");
+			if (amo > -Data.actWal.people.get(0).paid){
+			AlertDialog.Builder build = new AlertDialog.Builder(this);
+			build.setMessage(R.string.too_much)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									dialog.cancel();
+								}
+							}).show();
+			return;
+			}
 		}
 		
-		//TODO sprawdzic, ze wprowadzone sa sensowne, dodatnie dane
-		EditText sum = (EditText) findViewById(R.id.sum);
-		if (sum.getText().toString().equals(""))
-			res.putExtra("amount", 0.0);
-		else 
-			res.putExtra("amount", Double.valueOf(sum.getText().toString()));
+		//TODO sprawdzic, ze wprowadzone sa sensowne (<10^9) dane
+		res.putExtra("amount", amo);
 		
 		setResult(RESULT_OK, res);
 		finish();
