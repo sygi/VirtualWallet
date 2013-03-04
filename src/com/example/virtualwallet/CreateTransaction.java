@@ -61,7 +61,7 @@ public class CreateTransaction extends Activity {
 			a.who.paid += a.paid;
 		}
 		
-		EditText dsc = (EditText) findViewById(R.id.editText2);
+		EditText dsc = (EditText) findViewById(R.id.trans_desc);
 		trans.desc = dsc.getText().toString();
 		setResult(RESULT_OK);
 		finish();

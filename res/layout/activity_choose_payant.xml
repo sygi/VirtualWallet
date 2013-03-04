@@ -58,6 +58,7 @@
         android:layout_toRightOf="@id/radioGroup1"
         android:layout_alignParentTop="true"
         android:ems="10"
-        android:hint="@string/choose_p" />
+        android:hint="@string/choose_p"
+        android:singleLine="true" />
 
 </RelativeLayout>

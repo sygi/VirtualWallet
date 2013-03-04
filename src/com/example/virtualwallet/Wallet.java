@@ -76,10 +76,10 @@ public class Wallet {
 			log += "payants:\n";
 			for(Fee f : t.charge){
 				if (f.paid > 0.0){
-					log += f.toString() + "\n";
+					log += f.toString();
 				}
 			}
-			
+			log += "\n";
 			log += "users:\n";
 			for(Fee f : t.charge){
 				if (f.paid < 0.0){
