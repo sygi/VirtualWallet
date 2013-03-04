@@ -10,6 +10,7 @@ public class Wallet {
 	private ArrayList<Transaction> trans;
 	private String name;
 	private Date creationTime;
+	public String log;
 	
 	
 	Wallet(){
@@ -66,6 +67,29 @@ public class Wallet {
 	}
 	
 	String getLog(){
-		return null;
+		//TODO - zamienic hard coded strings na XMLe
+		//TODO zmienic troche model i umozliwic zapamietywanie, kiedy jaka osoba przyszla
+		String log = "";
+		log = name + " created " + creationTime.toString() + "\n================\n";
+		for(Transaction t : trans){
+			log += "transaction \"" + t.desc + "\" on " + t.time.toString() + "\n";
+			log += "payants:\n";
+			for(Fee f : t.charge){
+				if (f.paid > 0.0){
+					log += f.toString() + "\n";
+				}
+			}
+			
+			log += "users:\n";
+			for(Fee f : t.charge){
+				if (f.paid < 0.0){
+					log += f.who.name + "\n";
+				}
+			}
+			
+			log += "================\n";
+		}
+		
+		return log;
 	}
 }

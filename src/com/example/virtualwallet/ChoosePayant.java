@@ -52,7 +52,7 @@ public class ChoosePayant extends Activity {
 			return;
 		}
 		amo = Double.valueOf(sum.getText().toString());
-		if (amo < 0.0){
+		if (amo <= 0.0){
 			AlertDialog.Builder build = new AlertDialog.Builder(this);
 			build.setMessage(R.string.negative_value)
 					.setPositiveButton("OK",

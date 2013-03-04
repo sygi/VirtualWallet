@@ -1,8 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">WirtualnyPortfel</string>
+    <string name="app_name">Wirtualny portfel</string>
     <string name="hello_world">Witaj świecie!</string>
+    <string name="settings">Ustawienia</string>
+    <string name="new_wallet">Nowy portfel</string>
+    <string name="load_wallet">Wczytaj portfel</string>
+    <string name="authors">Jakub Sygnowski, Marzec 2013</string>
+    <string name="exit">Wyjście</string>
     <string name="menu_settings">Ustawienia</string>
+    <string name="title_activity_credits">Autorzy</string>
+    <string name="ok">Ok</string>
+    <string name="title_activity_settings">ustawienia</string>
+    <string name="title_activity_create_wallet">Utwórz nowy portfel</string>
+    <string name="title_activity_load_wallet">Wczytaj portfel</string>
+    <string name="wallet_name">Nazwa portfela</string>
+    <string name="new_person">Dodaj osobę</string>
+    <string name="title_activity_create_person">Stwórz nową osobę</string>
+    <string name="title_activity_wallet_screen">Wirtualny portfel</string>
+    <string name="mail">mail (opcjonalnie)</string>
+    <string name="person_name">Imię Nazwisko</string>
+    <string name="read_contacts">Wczytaj z kontaktów</string>
+    <string name="credits">O programie</string>
+    <string name="wallet_state">Stan portfela:</string>
+    <string name="new_trans">Nowa transakcja</string>
+    <string name="add_person">Dodaj osobę</string>
+    <string name="rem_person">Usuń (i rozlicz?) osobe</string>
+    <string name="log">Historia</string>
+    <string name="title_activity_create_transaction">Stwórz transakcję</string>
+    <string name="who_pays">Płacący:</string>
+    <string name="add_payant">Dodaj płacącego</string>
+    <string name="all_people">Wszyscy</string>
+    <string name="to_wallet">Do portfela</string>
+    <string name="some">Niektórzy</string>
+    <string name="for_whom">Dla kogo:</string>
+    <string name="title_activity_choose_payant">Wybierz płacącego</string>
+    <string name="choose_p">Wybierz płacącego</string>
+    <string name="name">Imię</string>
+    <string name="amount">Kwota</string>
+    <string name="description">Krótki opis</string>
+    <string name="person">Osoba</string>
+    <string name="from_wallet">Z portfela</string>
+    <string name="no_amount">Wpisz kwotę</string>
+    <string name="too_much">W portfelu nie ma tyle pieniędzy</string>
+    <string name="negative_value">You can\'t pay a negative amount of money</string>
 
 </resources>

@@ -2,6 +2,8 @@ package com.example.virtualwallet;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -93,11 +95,19 @@ public class WalletScreen extends Activity {
 	}
 	
 	public void removePerson(View view){
-		
+
 	}
 	
 	public void showHistory(View view){
-		
+		AlertDialog.Builder build = new AlertDialog.Builder(this);
+		build.setMessage(Data.actWal.getLog())
+				.setPositiveButton("OK",
+						new DialogInterface.OnClickListener() {
+							public void onClick(
+									DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						}).show();
 	}
 	
 	protected void onActivityResult (int requestCode, int resultCode, Intent data){

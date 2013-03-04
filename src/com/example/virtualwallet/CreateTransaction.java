@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -59,6 +60,9 @@ public class CreateTransaction extends Activity {
 		for(Fee a : trans.charge){
 			a.who.paid += a.paid;
 		}
+		
+		EditText dsc = (EditText) findViewById(R.id.editText2);
+		trans.desc = dsc.getText().toString();
 		setResult(RESULT_OK);
 		finish();
 	}
