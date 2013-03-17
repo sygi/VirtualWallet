@@ -39,9 +39,16 @@ public class CreatePerson extends Activity {
 		Intent i = new Intent();
 		EditText nm = (EditText) findViewById(R.id.editText1);
 		EditText ml = (EditText) findViewById(R.id.editText2);
+		if (nm.getText().toString().equals("")){
+			MainScreen.showDialog(getString(R.string.empty_person_name), this);
+			return;
+		}
+		if (nm.getText().toString().equals("wallet")){
+			MainScreen.showDialog(getString(R.string.person_wallet_name), this);
+			return;
+		}
 		//TODO zabezpieczyc sie przed pustym nm.getText().toString()
 		//TODO i przed osoba o imieniu 'wallet'
-		//TODO i przed wieloma osobami o tym samym imieniu
 		i.putExtra("name", nm.getText().toString());
 		i.putExtra("mail", ml.getText().toString());
 		setResult(RESULT_OK, i);

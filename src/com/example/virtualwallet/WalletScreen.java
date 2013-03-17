@@ -99,7 +99,9 @@ public class WalletScreen extends Activity {
 	}
 	
 	public void showHistory(View view){
+		MainScreen.showDialog(Data.actWal.getLog(), this);
 		//TODO - wywalic dialogi do osobnej klasy
+		/*
 		AlertDialog.Builder build = new AlertDialog.Builder(this);
 		build.setMessage(Data.actWal.getLog())
 				.setPositiveButton("OK",
@@ -108,7 +110,7 @@ public class WalletScreen extends Activity {
 									DialogInterface dialog, int id) {
 								dialog.cancel();
 							}
-						}).show();
+						}).show();*/
 	}
 	
 	protected void onActivityResult (int requestCode, int resultCode, Intent data){
@@ -118,6 +120,12 @@ public class WalletScreen extends Activity {
 		}
 		
 		if (requestCode == NEW_PERSON){
+			for(Person p : Data.actWal.people){
+				if (p.name.equals(data.getStringExtra("name"))){
+					MainScreen.showDialog(getString(R.string.person_exists), this);
+					return;
+				}
+			}
 			Data.actWal.addPerson(new Person(data.getStringExtra("name"), data.getStringExtra("mail")));
 			Log.d("sygi", "dodalem osobe do portfela");
 			actualize();

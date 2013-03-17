@@ -12,6 +12,18 @@ import android.view.View;
 
 public class MainScreen extends Activity {
 
+	public static void showDialog(String x, Activity a){
+		 AlertDialog.Builder build = new AlertDialog.Builder(a);
+			build.setMessage(x)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									dialog.cancel();
+								}
+							}).show();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,15 +64,7 @@ public class MainScreen extends Activity {
 	 }
 	 
 	 public void debRead(View view){
-		 AlertDialog.Builder build = new AlertDialog.Builder(this);
-			build.setMessage(Data.readFromDatabase())
-					.setPositiveButton("OK",
-							new DialogInterface.OnClickListener() {
-								public void onClick(
-										DialogInterface dialog, int id) {
-									dialog.cancel();
-								}
-							}).show();
+		 showDialog(Data.readFromDatabase(), this);
 	 }
 	 
 	 public void debWrite(View view){

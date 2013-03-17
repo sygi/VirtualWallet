@@ -32,7 +32,7 @@
     <string name="add_payant">Dodaj płacącego</string>
     <string name="all_people">Wszyscy</string>
     <string name="to_wallet">Do portfela</string>
-    <string name="some">Niektórzy</string>
+    <string name="some">Niektórzy (TODO)</string>
     <string name="for_whom">Dla kogo:</string>
     <string name="title_activity_choose_payant">Wybierz płacącego</string>
     <string name="choose_p">Wybierz płacącego</string>

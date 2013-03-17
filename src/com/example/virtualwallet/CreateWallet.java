@@ -50,6 +50,10 @@ public class CreateWallet extends Activity {
 		EditText et = (EditText) findViewById(R.id.wallet_name);
 		
 		//TODO dialog w przypadku pustej nazwy portfela
+		if (et.getText().toString().equals("")){
+			MainScreen.showDialog(getString(R.string.no_wallet_name), this);
+			return;
+		}
 		wal.setName(et.getText().toString());
 		Data.wallet.add(wal);
 		Data.actWal = wal;
@@ -68,6 +72,12 @@ public class CreateWallet extends Activity {
 		
 		if (requestCode == CREATE_PERSON){
 			Log.d("sygi", "wybrano osobe");
+			for(Person p : wal.people){
+				if (p.name.equals(data.getStringExtra("name"))){
+					MainScreen.showDialog(getString(R.string.person_exists), this);
+					return;
+				}
+			}
 			TextView tv = new TextView(this);
 			tv.setId(10004 + wal.personCount());
 			tv.setText(data.getStringExtra("name"));
@@ -81,8 +91,6 @@ public class CreateWallet extends Activity {
 			} else {
 				lp.addRule(RelativeLayout.BELOW, 10004 + wal.personCount()-1);
 			}
-			
-			
 			
 			Button ok = (Button) findViewById(R.id.add_person);
 			Log.d("sygi", "but" + ok.getText());

@@ -1,8 +1,6 @@
 package com.example.virtualwallet;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,15 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 public class ChoosePayant extends Activity {
 
+	private String[] peopleNames;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_payant);
-		String[] peopleNames = Data.actWal.getNames();
+		peopleNames = Data.actWal.getNames();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, peopleNames);
 		AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
 		tv.setAdapter(adapter);
@@ -40,50 +38,35 @@ public class ChoosePayant extends Activity {
 		EditText sum = (EditText) findViewById(R.id.sum);
 		Double amo = 0.0;
 		if (sum.getText().toString().equals("")){
-			AlertDialog.Builder build = new AlertDialog.Builder(this);
-			build.setMessage(R.string.no_amount)
-					.setPositiveButton("OK",
-							new DialogInterface.OnClickListener() {
-								public void onClick(
-										DialogInterface dialog, int id) {
-									dialog.cancel();
-								}
-							}).show();
+			MainScreen.showDialog(getString(R.string.no_amount), this);
 			return;
 		}
 		amo = Double.valueOf(sum.getText().toString());
 		if (amo <= 0.0){
-			AlertDialog.Builder build = new AlertDialog.Builder(this);
-			build.setMessage(R.string.negative_value)
-					.setPositiveButton("OK",
-							new DialogInterface.OnClickListener() {
-								public void onClick(
-										DialogInterface dialog, int id) {
-									dialog.cancel();
-								}
-							}).show();
+			MainScreen.showDialog(getString(R.string.negative_value), this);
 			return;
 		}
 		
 		if (rb.isChecked()){ //placi osoba
-			//TODO - sprawdzic, ze jeszcze nie placila
+			//TODO - sprawdzic, ze jeszcze nie placila = ?
 			AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
+			boolean found = false;
+			for(String s : peopleNames){
+				if (s.equals(tv.getText().toString()))
+					found = true;
+			}
+			if (!found){
+				MainScreen.showDialog(getString(R.string.no_such_person), this);
+				return;
+			}
 			res.putExtra("name", tv.getText().toString()); //wazne! bez .toString() nie dziala - problem z konwersja typow
 			Log.d("sygi", "wybrano osobe " + tv.getText());
 		} else {
 			Log.d("sygi", "wybrano placenie z portfela");
 			res.putExtra("name", "wallet");
 			if (amo > -Data.actWal.people.get(0).paid){
-			AlertDialog.Builder build = new AlertDialog.Builder(this);
-			build.setMessage(R.string.too_much)
-					.setPositiveButton("OK",
-							new DialogInterface.OnClickListener() {
-								public void onClick(
-										DialogInterface dialog, int id) {
-									dialog.cancel();
-								}
-							}).show();
-			return;
+				MainScreen.showDialog(getString(R.string.too_much), this);
+				return;
 			}
 		}
 		

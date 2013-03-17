@@ -59,6 +59,8 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="@string/choose_p"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:nextFocusDown="@id/sum"
+        android:imeOptions="actionNext" />
 
 </RelativeLayout>

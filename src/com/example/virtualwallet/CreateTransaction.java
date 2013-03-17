@@ -29,6 +29,15 @@ public class CreateTransaction extends Activity {
 	}
 	
 	public void exit(View view){
+		EditText dsc = (EditText) findViewById(R.id.trans_desc);
+		if (dsc.getText().toString().equals("")){
+			MainScreen.showDialog(getString(R.string.enter_desc), this);
+			return;
+		}
+		if (trans.charge.size() == 0){
+			MainScreen.showDialog(getString(R.string.no_payants), this);
+		}
+		trans.desc = dsc.getText().toString();
 		Log.d("sygi", "ustawiam koszty");
 		Double cost = 0.0;
 		for(Fee f : trans.charge){
@@ -61,8 +70,6 @@ public class CreateTransaction extends Activity {
 			a.who.paid += a.paid;
 		}
 		
-		EditText dsc = (EditText) findViewById(R.id.trans_desc);
-		trans.desc = dsc.getText().toString();
 		setResult(RESULT_OK);
 		finish();
 	}
@@ -77,7 +84,6 @@ public class CreateTransaction extends Activity {
 			return;
 		}
 		if (requestCode == CHOOSE_PAYANT){
-			//TODO - zbiera kwote (sum) i imie (name) i dodaje do tworzonej tranzakcji odpowiednie fee
 			String name = data.getStringExtra("name");
 			Log.d("sygi", "podano osobe " + name);
 			Double amount = Double.valueOf(data.getDoubleExtra("amount", 0.0));

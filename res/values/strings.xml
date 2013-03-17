@@ -32,7 +32,7 @@
     <string name="add_payant">Add payant</string>
     <string name="all_people">Everybody</string>
     <string name="to_wallet">To wallet</string>
-    <string name="some">Some people</string>
+    <string name="some">Some people (TODO)</string>
     <string name="for_whom">For whom:</string>
     <string name="title_activity_choose_payant">ChoosePayant</string>
     <string name="choose_p">Choose payant</string>
@@ -44,5 +44,12 @@
     <string name="no_amount">Enter amount</string>
     <string name="too_much">Wallet doesn\'t contain so much money</string>
     <string name="negative_value">You can\'t pay a non-positive amount of money</string>
+    <string name="person_exists">Person with this name already exists in that wallet</string>
+    <string name="no_wallet_name">Please enter name for that wallet</string>
+    <string name="empty_person_name">Enter person name</string>
+    <string name="person_wallet_name">You cannot create person with this name. Sorry</string>
+    <string name="no_such_person">There\'s no such person in this wallet</string>
+    <string name="enter_desc">Enter description of the transaction</string>
+    <string name="no_payants">Choose some payants</string>
 
 </resources>
