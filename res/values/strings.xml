@@ -43,6 +43,6 @@
     <string name="from_wallet">From wallet</string>
     <string name="no_amount">Enter amount</string>
     <string name="too_much">Wallet doesn\'t contain so much money</string>
-    <string name="negative_value">You can\'t pay a negative amount of money</string>
+    <string name="negative_value">You can\'t pay a non-positive amount of money</string>
 
 </resources>

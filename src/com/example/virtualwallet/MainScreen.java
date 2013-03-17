@@ -3,6 +3,8 @@ package com.example.virtualwallet;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +17,7 @@ public class MainScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_screen);
 		Data.wallet = new ArrayList<Wallet>();
+		Data.DBAccess = new DBHelper(this); 
 	}
 
 	@Override
@@ -46,6 +49,22 @@ public class MainScreen extends Activity {
 	 public void loadWallet(View view) {
 		 Intent i = new Intent(this, LoadWallet.class);
 		 startActivity(i);
+	 }
+	 
+	 public void debRead(View view){
+		 AlertDialog.Builder build = new AlertDialog.Builder(this);
+			build.setMessage(Data.readFromDatabase())
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									dialog.cancel();
+								}
+							}).show();
+	 }
+	 
+	 public void debWrite(View view){
+		 Data.saveToDatabase();
 	 }
 
 }

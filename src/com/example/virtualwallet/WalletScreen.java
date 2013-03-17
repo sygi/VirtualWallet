@@ -99,6 +99,7 @@ public class WalletScreen extends Activity {
 	}
 	
 	public void showHistory(View view){
+		//TODO - wywalic dialogi do osobnej klasy
 		AlertDialog.Builder build = new AlertDialog.Builder(this);
 		build.setMessage(Data.actWal.getLog())
 				.setPositiveButton("OK",

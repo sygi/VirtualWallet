@@ -43,6 +43,5 @@
     <string name="from_wallet">Z portfela</string>
     <string name="no_amount">Wpisz kwotę</string>
     <string name="too_much">W portfelu nie ma tyle pieniędzy</string>
-    <string name="negative_value">You can\'t pay a negative amount of money</string>
-
+    
 </resources>

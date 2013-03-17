@@ -6,10 +6,11 @@ import java.util.Date;
 import android.util.Log;
 
 public class Wallet {
+	//TODO zmienic wszystko na private i zrobic jakies sensowne zarzadzanie tym :P
 	public ArrayList<Person> people;
-	private ArrayList<Transaction> trans;
+	public ArrayList<Transaction> trans;
 	private String name;
-	private Date creationTime;
+	public Date creationTime;
 	public String log;
 	
 	
