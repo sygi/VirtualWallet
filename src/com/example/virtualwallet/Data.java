@@ -44,10 +44,12 @@ public class Data {
 			//zalozenie - jeden portfel o danej nazwie
 			
 			String[] proj = {DBSchema.Wallet._ID};
+			String[] selArg = {w.getName()};
 			Cursor c = db.query(
 					DBSchema.Wallet.TABLE_NAME,
 					proj,
-					DBSchema.Wallet.COLUMN_NAME_NAME + " = " + w.getName(),
+					DBSchema.Wallet.COLUMN_NAME_NAME + " = ?",
+					selArg,
 					null, null, null, null);
 			c.moveToFirst();
 			int idW = c.getInt(c.getColumnIndex(DBSchema.Wallet._ID));

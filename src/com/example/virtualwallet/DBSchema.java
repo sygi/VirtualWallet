@@ -19,7 +19,7 @@ public class DBSchema {
 	}
 	public static final class Transaction implements BaseColumns{
 		private Transaction() {}
-		public static final String TABLE_NAME = "transaction";
+		public static final String TABLE_NAME = "trans";
 		public static final String COLUMN_NAME_DESC = "description";
 		public static final String COLUMN_NAME_WHEN = "time";
 	}
@@ -28,6 +28,6 @@ public class DBSchema {
 		public static final String TABLE_NAME = "fee";
 		public static final String COLUMN_NAME_PERSON_ID = "personId";
 		public static final String COLUMN_NAME_PAID = "paid";
-		public static final String COLUMN_NAME_TRANS_ID = "transactionId";
+		public static final String COLUMN_NAME_TRANS_ID = "transId";
 	}
 }

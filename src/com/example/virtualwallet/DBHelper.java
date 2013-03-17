@@ -2,7 +2,6 @@ package com.example.virtualwallet;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -10,7 +9,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "wallet.db";
 	public DBHelper(Context context) {
-		super(context, DB_NAME, null, 1);
+		super(context, DB_NAME, null, 4);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -18,8 +17,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		final String CREATE_WALLET =
 		"CREATE TABLE " + DBSchema.Wallet.TABLE_NAME + " (" +
-		DBSchema.Wallet._ID + " INTEGER PRIMARY KEY," + 
-		DBSchema.Wallet.COLUMN_NAME_NAME + " TEXT," + 
+		DBSchema.Wallet._ID + " INTEGER PRIMARY KEY, " + 
+		DBSchema.Wallet.COLUMN_NAME_NAME + " TEXT, " + 
 		DBSchema.Wallet.COLUMN_NAME_CREATION_DATE + " INTEGER);";
 		
 		final String CREATE_PERSON =
@@ -43,14 +42,15 @@ public class DBHelper extends SQLiteOpenHelper {
 		"CREATE TABLE " + DBSchema.Fee.TABLE_NAME + " (" +
 		DBSchema.Fee._ID + " INTEGER PRIMARY KEY," +
 		DBSchema.Fee.COLUMN_NAME_PERSON_ID + " INTEGER," + 
-		"FOREIGN KEY(" + DBSchema.Fee.COLUMN_NAME_PERSON_ID + 
-		") REFERENCES " + DBSchema.Person.TABLE_NAME + "(" + 
-		DBSchema.Person._ID + ")," +
 		DBSchema.Fee.COLUMN_NAME_TRANS_ID + " INTEGER," +
+		DBSchema.Fee.COLUMN_NAME_PAID + " REAL," + 
 		"FOREIGN KEY(" + DBSchema.Fee.COLUMN_NAME_TRANS_ID + 
 		") REFERENCES " + DBSchema.Transaction.TABLE_NAME + "(" +
 		DBSchema.Transaction._ID + ")," +
-		DBSchema.Fee.COLUMN_NAME_PAID + " REAL);";
+		"FOREIGN KEY(" + DBSchema.Fee.COLUMN_NAME_PERSON_ID + 
+		") REFERENCES " + DBSchema.Person.TABLE_NAME + "(" + 
+		DBSchema.Person._ID + "));";
+		
 		
 		db.execSQL(CREATE_WALLET);
 		db.execSQL(CREATE_PERSON);
@@ -61,9 +61,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
 		Log.d("sygi", "Database - on upgrade");
-		
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Fee.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Person.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Transaction.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Wallet.TABLE_NAME);
+		onCreate(db);
+	}
+	
+	@Override
+	public void onDowngrade(SQLiteDatabase db, int oldV, int newV){
+		Log.d("sygi", "Database - on downgrade");
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Fee.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Person.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Transaction.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Wallet.TABLE_NAME);
+		onCreate(db);
 	}
 
 }
