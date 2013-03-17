@@ -57,5 +57,6 @@
     <string name="who">Who:</string>
     <string name="check_all">Check all</string>
     <string name="uncheck_all">Uncheck all</string>
+    <string name="no_checked">Choose at least one person</string>
 
 </resources>
