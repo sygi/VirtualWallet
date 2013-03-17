@@ -23,6 +23,7 @@ public class WalletScreen extends Activity {
 
 	private static final int NEW_PERSON = 10;
 	private static final int NEW_TRANS = 19;
+	private static final int REMOVE_PERSON = 17;
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +122,8 @@ public class WalletScreen extends Activity {
 	}
 	
 	public void removePerson(View view){
-
+		Intent i = new Intent(this, RemovePerson.class);
+		startActivityForResult(i, REMOVE_PERSON);
 	}
 	
 	public void showHistory(View view){
@@ -157,6 +159,8 @@ public class WalletScreen extends Activity {
 			actualize();
 		} else if (requestCode == NEW_TRANS){
 			//synchronicznie
+			actualize();
+		} else if (requestCode == REMOVE_PERSON){
 			actualize();
 		}
 	}

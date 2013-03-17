@@ -74,6 +74,10 @@
             android:name="com.example.virtualwallet.ChoosePayant"
             android:label="@string/title_activity_choose_payant" >
         </activity>
+        <activity
+            android:name="com.example.virtualwallet.RemovePerson"
+            android:label="@string/title_activity_remove_person" >
+        </activity>
     </application>
 
 </manifest>

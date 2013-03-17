@@ -30,7 +30,15 @@ public class Wallet {
 	}
 	
 	public String[] getNames(){
-		String[] tab = new String[people.size()];
+		if (people.get(0).name.equals("wallet")){
+			String[] tab = new String[people.size() - 1];
+			for(int i = 1; i < people.size(); i++){
+				tab[i - 1] = people.get(i).name;
+			}
+			return tab;
+		}
+		//na wypadek kompatybilnosci wstecz, gdybym usunal 'wallet'
+		String tab[] = new String[people.size()];
 		for(int i = 0; i < people.size(); i++){
 			tab[i] = people.get(i).name;
 		}

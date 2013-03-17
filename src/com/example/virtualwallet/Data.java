@@ -43,7 +43,6 @@ public class Data {
 		while (!c.isAfterLast()){
 			Wallet w = new Wallet(c.getString(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_NAME)));
 			w.creationTime = new Date(1000 * c.getLong(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CREATION_DATE)));
-			Log.d("sygi", "wallet" + w.creationTime.getTime());
 			wallet.add(w);
 			wallDict.put(c.getInt(c.getColumnIndex(DBSchema.Wallet._ID)), w);
 			res += c.getInt(c.getColumnIndex(DBSchema.Wallet._ID)) + " ";
@@ -80,7 +79,6 @@ public class Data {
 		while (!c.isAfterLast()){
 			Transaction t = new Transaction(c.getString(c.getColumnIndex(DBSchema.Transaction.COLUMN_NAME_DESC)),
 					new Date(1000 * c.getLong(c.getColumnIndex(DBSchema.Transaction.COLUMN_NAME_WHEN))));
-			Log.d("sygi", "transaction" + t.time.getTime());
 			transDict.put(c.getInt(c.getColumnIndex(DBSchema.Transaction._ID)), t);
 			wallDict.get(c.getInt(c.getColumnIndex(DBSchema.Transaction.COLUMN_NAME_WALLET_ID))).trans.add(t);
 			res += c.getInt(c.getColumnIndex(DBSchema.Transaction._ID)) + " ";

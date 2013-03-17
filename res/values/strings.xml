@@ -53,5 +53,9 @@
     <string name="no_payants">Choose some payants</string>
     <string name="sure">Are you sure? This cannot be undone</string>
     <string name="remove_wallet">Remove wallet</string>
+    <string name="title_activity_remove_person">Settle acounts with some people</string>
+    <string name="who">Who:</string>
+    <string name="check_all">Check all</string>
+    <string name="uncheck_all">Uncheck all</string>
 
 </resources>
