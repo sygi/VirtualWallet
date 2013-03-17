@@ -30,6 +30,13 @@ public class MainScreen extends Activity {
 		setContentView(R.layout.activity_main_screen);
 		Data.wallet = new ArrayList<Wallet>();
 		Data.DBAccess = new DBHelper(this); 
+		Data.readFromDatabase();
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState){
+		super.onSaveInstanceState(outState);
+		Data.saveToDatabase();
 	}
 
 	@Override

@@ -36,6 +36,7 @@ public class CreateTransaction extends Activity {
 		}
 		if (trans.charge.size() == 0){
 			MainScreen.showDialog(getString(R.string.no_payants), this);
+			return;
 		}
 		trans.desc = dsc.getText().toString();
 		Log.d("sygi", "ustawiam koszty");

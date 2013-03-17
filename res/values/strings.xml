@@ -25,7 +25,7 @@
     <string name="wallet_state">Wallet state:</string>
     <string name="new_trans">New transaction</string>
     <string name="add_person">Add person</string>
-    <string name="rem_person">Remove person</string>
+    <string name="rem_person">Remove person (TODO)</string>
     <string name="log">Payment history</string>
     <string name="title_activity_create_transaction">Create a transaction</string>
     <string name="who_pays">Payants:</string>
@@ -51,5 +51,7 @@
     <string name="no_such_person">There\'s no such person in this wallet</string>
     <string name="enter_desc">Enter description of the transaction</string>
     <string name="no_payants">Choose some payants</string>
+    <string name="sure">Are you sure? This cannot be undone</string>
+    <string name="remove_wallet">Remove wallet</string>
 
 </resources>

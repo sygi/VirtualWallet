@@ -17,6 +17,19 @@ public class Data {
 	public static ArrayList<Wallet> wallet;
 	public static Wallet actWal;
 	public static DBHelper DBAccess;
+	static void removeActWallet() throws Exception{
+		if (actWal == null){
+			throw new Exception("There's no actWal");
+		}
+		for (Wallet w : wallet){
+			if (w.equals(actWal)){
+				wallet.remove(w);
+				actWal = null;
+				return;
+			}
+		}
+		throw new Exception("actWal not in wallet list");
+	}
 	static String readFromDatabase(){ 
 		wallet.clear();
 		actWal = null;

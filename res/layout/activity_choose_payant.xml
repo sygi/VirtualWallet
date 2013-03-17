@@ -61,6 +61,8 @@
         android:hint="@string/choose_p"
         android:singleLine="true"
         android:nextFocusDown="@id/sum"
-        android:imeOptions="actionNext" />
+        android:imeOptions="actionNext">
+        <requestFocus />
+    </AutoCompleteTextView>
 
 </RelativeLayout>

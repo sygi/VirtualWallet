@@ -94,6 +94,32 @@ public class WalletScreen extends Activity {
 		//aktualizacja - w onResult
 	}
 	
+	public void removeWallet(View view){
+		 AlertDialog.Builder build = new AlertDialog.Builder(this);
+			build.setMessage(getString(R.string.sure))
+					.setPositiveButton("Yes",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									try {
+										Data.removeActWallet();
+										finish();
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									dialog.dismiss();
+								}
+							})
+					.setNegativeButton("No",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.dismiss();
+								}
+							})
+					.show();
+	}
+	
 	public void removePerson(View view){
 
 	}
