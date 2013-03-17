@@ -25,7 +25,6 @@ public class Person {
 		//TODO - skracanie z dokladnoscia do 2 miejsc po przecinku
 		//String paidDesc = (Double.valueOf(Math.round(paid * 100)/100.0)).toString();
 		
-
 		if (name == "wallet"){
 			return ""; //nieladnie, moznaby wymyslec cos lepszego
 		}

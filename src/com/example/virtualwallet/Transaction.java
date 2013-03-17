@@ -22,6 +22,7 @@ public class Transaction {
 	Transaction(String desc, ArrayList<Fee> charge){
 		this.desc = desc;
 		this.charge = charge;
+		time = new Date();
 	}
 	
 	Transaction(){

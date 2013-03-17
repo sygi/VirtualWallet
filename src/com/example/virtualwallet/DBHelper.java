@@ -9,7 +9,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "wallet.db";
 	public DBHelper(Context context) {
-		super(context, DB_NAME, null, 4);
+		super(context, DB_NAME, null, 5);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -36,7 +36,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		"CREATE TABLE " + DBSchema.Transaction.TABLE_NAME + " (" +
 		DBSchema.Transaction._ID + " INTEGER PRIMARY KEY," +
 		DBSchema.Transaction.COLUMN_NAME_WHEN + " INTEGER," +
-		DBSchema.Transaction.COLUMN_NAME_DESC + " TEXT);";
+		DBSchema.Transaction.COLUMN_NAME_DESC + " TEXT," +
+		DBSchema.Transaction.COLUMN_NAME_WALLET_ID + " INTEGER," +
+		"FOREIGN KEY(" + DBSchema.Transaction.COLUMN_NAME_WALLET_ID + 
+		") REFERENCES " + DBSchema.Wallet.TABLE_NAME + "(" +
+		DBSchema.Wallet._ID + "));";
 		
 		final String CREATE_FEE = 
 		"CREATE TABLE " + DBSchema.Fee.TABLE_NAME + " (" +

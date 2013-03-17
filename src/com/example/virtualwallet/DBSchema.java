@@ -22,6 +22,7 @@ public class DBSchema {
 		public static final String TABLE_NAME = "trans";
 		public static final String COLUMN_NAME_DESC = "description";
 		public static final String COLUMN_NAME_WHEN = "time";
+		public static final String COLUMN_NAME_WALLET_ID = "walletId"; //redundancja, ale ulatwia wczytywanie tego wszystkiego
 	}
 	public static final class Fee implements BaseColumns{
 		private Fee() {}
