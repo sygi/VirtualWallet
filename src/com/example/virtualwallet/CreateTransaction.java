@@ -1,5 +1,7 @@
 package com.example.virtualwallet;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +15,14 @@ import android.widget.TextView;
 public class CreateTransaction extends Activity {
 
 	private static final int CHOOSE_PAYANT = 17; 
+	private static final int CHOOSE_SOME = 10;
 	Transaction trans;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_transaction);
 		trans = new Transaction();
+		actSubs = new ArrayList<String>();
 	}
 
 	@Override
@@ -36,6 +40,11 @@ public class CreateTransaction extends Activity {
 		}
 		if (trans.charge.size() == 0){
 			MainScreen.showDialog(getString(R.string.no_payants), this);
+			return;
+		}
+		RadioButton rb3 = (RadioButton) findViewById(R.id.radioButton3);
+		if (rb3.isChecked() && actSubs.size() == 0){
+			MainScreen.showDialog(getString(R.string.at_least_one), this);
 			return;
 		}
 		trans.desc = dsc.getText().toString();
@@ -60,6 +69,17 @@ public class CreateTransaction extends Activity {
 				trans.charge.add(new Fee(Data.actWal.people.get(0), -cost)); //0 - wallet, zakladam ze jest ciagle niedodatni
 			} else {
 				//TODO - pewien zbior osob
+				cost /= actSubs.size();
+				for (String s : actSubs){
+					try {
+						Person p = Data.actWal.findPerson(s);
+						trans.charge.add(new Fee(p, -cost));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
 			}
 		}
 		
@@ -81,7 +101,10 @@ public class CreateTransaction extends Activity {
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		if (resultCode == RESULT_CANCELED){
+		if (resultCode == RESULT_CANCELED){ 
+			//TODO zrobic cos, gdy ktos poprosi o subset, a potem zrezygnuje
+			if (requestCode == CHOOSE_SOME){
+			}
 			return;
 		}
 		if (requestCode == CHOOSE_PAYANT){
@@ -99,6 +122,28 @@ public class CreateTransaction extends Activity {
 			trans.charge.add(some);
 			TextView tv = (TextView) findViewById(R.id.payment_list);
 			tv.setText(tv.getText() + some.toString());
+			return;
 		}
+		if (requestCode == CHOOSE_SOME){
+			Log.d("sygi", "wybrano podzbior osob");
+			actSubs = new ArrayList<String>();
+			int cnt = data.getIntExtra("peopleCount", 0);
+			for(int i = 0; i < cnt; i++){
+				actSubs.add(data.getStringExtra("p" + i));
+			}
+			return;
+		}
+	}
+	
+	private ArrayList<String> actSubs;
+	public void some(View view){
+		Intent i = new Intent(this, ChooseSubset.class);
+		if (actSubs != null){
+			i.putExtra("peopleCount", actSubs.size());
+			for(int j = 0; j < actSubs.size(); j++){
+				i.putExtra("p" + j, actSubs.get(j));
+			}
+		}
+		startActivityForResult(i, CHOOSE_SOME);
 	}
 }

@@ -96,7 +96,7 @@ public class RemovePerson extends Activity {
 			}
 			//tu potencjalnie sie moga dziac zle rzeczy
 		} else {
-			report += p.name + "has paid " + p.paid + " too little, so (s)he owes:\n";
+			report += p.name + " has paid " + p.paid + " too little, so (s)he owes:\n";
 			while(p.paid < 0.0){
 				Person winner = highestAccount();
 				if (winner.paid + p.paid < 0.0){
@@ -164,11 +164,19 @@ public class RemovePerson extends Activity {
 	}
 	
 	public void checkAll(View view){
-		//TODO
+		checkUncheck(true);
+	}
+	
+	private void checkUncheck(boolean side){
+		ListView lv = (ListView) findViewById(R.id.listView1);
+		int cnt = lv.getCount();
+		for(int i = 0; i < cnt; i++){
+			lv.setItemChecked(i, side);
+		}
 	}
 	
 	public void uncheckAll(View view){
-		//TODO
+		checkUncheck(false);
 	}
 	
 	
