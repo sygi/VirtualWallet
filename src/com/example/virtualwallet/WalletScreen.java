@@ -72,7 +72,8 @@ public class WalletScreen extends Activity {
 		TextView table = (TextView) findViewById(R.id.person_table);
 		String state = "";
 		for(Person p : Data.actWal.people){
-			state += p;
+			if (!p.name.equals("wallet"))
+				state += p;
 		}
 		table.setText(Html.fromHtml(state));
 		View layout = (View) findViewById(R.id.wallet_layout);
@@ -155,7 +156,7 @@ public class WalletScreen extends Activity {
 				}
 			}
 			Data.actWal.addPerson(new Person(data.getStringExtra("name"), data.getStringExtra("mail")));
-			Log.d("sygi", "dodalem osobe do portfela");
+			Log.d("sygi", "dodalem osobe " + data.getStringExtra("name") + " do portfela");
 			actualize();
 		} else if (requestCode == NEW_TRANS){
 			//synchronicznie

@@ -58,5 +58,6 @@
     <string name="check_all">Check all</string>
     <string name="uncheck_all">Uncheck all</string>
     <string name="no_checked">Choose at least one person</string>
+    <string name="joking">You\'re joking, right?</string>
 
 </resources>

@@ -50,6 +50,7 @@ public class Data {
 			res += c.getInt(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CREATION_DATE)) + "\n";
 			c.moveToNext();
 		}
+		c.close();
 		
 		res += "\nPERSON:\n";
 		Map<Integer, Person> perDict = new HashMap<Integer, Person>();
@@ -69,6 +70,7 @@ public class Data {
 					", walletId = " + c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID)) + "\n";
 			c.moveToNext();
 		}
+		c.close();
 		
 		res += "\nTRANSACTION\n";
 		String projT[] = {DBSchema.Transaction._ID, DBSchema.Transaction.COLUMN_NAME_WHEN, DBSchema.Transaction.COLUMN_NAME_DESC, DBSchema.Transaction.COLUMN_NAME_WALLET_ID};
@@ -86,6 +88,7 @@ public class Data {
 			+ c.getInt(c.getColumnIndex(DBSchema.Transaction.COLUMN_NAME_WHEN)) + "\n";
 			c.moveToNext();
 		}
+		c.close();
 		
 		res += "\nFEE\n";
 		String projF[] = {DBSchema.Fee._ID, DBSchema.Fee.COLUMN_NAME_PERSON_ID, DBSchema.Fee.COLUMN_NAME_TRANS_ID, DBSchema.Fee.COLUMN_NAME_PAID};
@@ -101,10 +104,20 @@ public class Data {
 			res += c.getDouble(c.getColumnIndex(DBSchema.Fee.COLUMN_NAME_PAID)) + "\n";
 			c.moveToNext();
 		}
+		c.close();
+		db.close();
+		Log.d("sygi", res);
 		return res;
 	}
 	static void saveToDatabase(){
 		SQLiteDatabase db = DBAccess.getWritableDatabase();
+		Log.d("sygi",  "saveToDatabase");
+		if (actWal != null){
+		Log.d("sygi", "actWal, people:");
+		for(Person p : actWal.people){
+			Log.d("sygi", p.name);
+		}
+		}
 		//wyczyscic informacje z BD
 		db.delete(DBSchema.Fee.TABLE_NAME, null, null);
 		db.delete(DBSchema.Transaction.TABLE_NAME, null, null);
@@ -123,6 +136,7 @@ public class Data {
 				val.put(DBSchema.Person.COLUMN_NAME_MAIL, p.mail);
 				val.put(DBSchema.Person.COLUMN_NAME_PAID, p.paid);
 				val.put(DBSchema.Person.COLUMN_NAME_WALLET_ID, walletId);
+				Log.d("sygi", "person" + p.name + "idwal" + walletId);
 				db.insert(DBSchema.Person.TABLE_NAME, null, val);
 			}
 			
@@ -144,6 +158,7 @@ public class Data {
 							null, null, null, "1");
 					c.moveToFirst();
 					long personId = c.getInt(c.getColumnIndex(DBSchema.Person._ID));
+					c.close();
 					val = new ContentValues();
 					val.put(DBSchema.Fee.COLUMN_NAME_PAID, f.paid);
 					val.put(DBSchema.Fee.COLUMN_NAME_PERSON_ID, personId);
@@ -152,6 +167,7 @@ public class Data {
 				}
 			}
 		}
+		db.close();
 		
 	}
 }

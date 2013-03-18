@@ -65,6 +65,16 @@ public class Wallet {
 		return name;
 	}
 	
+	public boolean removePerson(String name){
+		for(Person p: people){
+			if(p.name.equals(name)){
+				people.remove(p);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public Person findPerson(String name) throws Exception{
 		Log.d("sygi", "szukam " + name);
 		for(Person p : people){
@@ -77,7 +87,7 @@ public class Wallet {
 	
 	String getLog(){
 		//TODO - zamienic hard coded strings na XMLe
-		//TODO zmienic troche model i umozliwic zapamietywanie, kiedy jaka osoba przyszla
+		//TODO zmienic troche model i umozliwic zapamietywanie, kiedy jaka osoba przyszla 
 		String log = "";
 		log = name + " created " + creationTime.toString() + "\n================\n";
 		for(Transaction t : trans){
@@ -92,7 +102,7 @@ public class Wallet {
 			log += "users:\n";
 			for(Fee f : t.charge){
 				if (f.paid < 0.0){
-					log += f.who.name + "\n";
+					log += f.who.name + " (" + -f.paid +")\n";
 				}
 			}
 			

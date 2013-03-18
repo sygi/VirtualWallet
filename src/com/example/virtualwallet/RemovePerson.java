@@ -14,6 +14,7 @@ public class RemovePerson extends Activity {
 
 	private String[] peopleNames;
 	private String report = "";
+	private Transaction t;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,32 +68,51 @@ public class RemovePerson extends Activity {
 		}
 		//to chyba kiepskie uzycie wyjatkow 
 		if (Math.abs(p.paid) < 0.02){
-			report += p.name + " has paid the same amount as he gets, so he owes nothing\n";
+			report += p.name + " has paid the same amount as (s)he gets, so (s)he owes nothing\n";
 			return;
 		}
 		//TODO - dopisac robienie zmian w portfelu przez transakcje
 		if (p.paid > 0.0){
-			report += p.name + " has paid " + p.paid + " too much, so he gets:\n";
+			report += p.name + " has paid " + p.paid + " too much, so (s)he gets:\n";
 			while(p.paid > 0.0){
 				Person loser = biggestDept();
 				if (loser.paid + p.paid > 0.0){
 					report += -loser.paid + " from " + loser.name + "\n";
+					Fee f = new Fee(p, loser.paid);
+					t.charge.add(f);
+					f = new Fee(loser, -loser.paid);
+					t.charge.add(f);
 					p.paid += loser.paid; //loser.paid < 0.0
+					loser.paid = 0.0;
 				} else {
+					Fee f = new Fee(p, -p.paid);
+					t.charge.add(f);
+					f = new Fee(loser, p.paid);
+					t.charge.add(f);
 					report += p.paid + " from " + loser.name + "\n";
+					loser.paid += p.paid;
 					p.paid = 0.0;
 				}
 			}
 			//tu potencjalnie sie moga dziac zle rzeczy
 		} else {
-			report += p.name + "has paid " + p.paid + " too little, so he owes:\n";
+			report += p.name + "has paid " + p.paid + " too little, so (s)he owes:\n";
 			while(p.paid < 0.0){
 				Person winner = highestAccount();
 				if (winner.paid + p.paid < 0.0){
+					Fee f = new Fee(winner, -winner.paid);
+					t.charge.add(f);
+					f = new Fee(p, winner.paid);
+					t.charge.add(f);
 					report += winner.paid + " to " + winner.name + "\n";
 					p.paid += winner.paid;
+					winner.paid = 0.0;
 				} else {
 					report += -p.paid + " to " + winner.name + "\n";
+					Fee f = new Fee(winner, p.paid);
+					t.charge.add(f);
+					f = new Fee(p, -p.paid);
+					winner.paid += p.paid;
 					p.paid = 0.0;
 				}
 			}
@@ -100,13 +120,15 @@ public class RemovePerson extends Activity {
 		
 	}
 
-	public void exit(View view) {
+	public void exit(View view) throws Exception {
 		//TODO przerzucic do to R.strings, zeby zrobic lokalizacje
 		report = "Settlements report\n"; 
 		ListView lv = (ListView) findViewById(R.id.listView1);
 		int cnt = lv.getCount();
 		int countChecked = 0;
 		SparseBooleanArray checked = lv.getCheckedItemPositions();
+		t = new Transaction("Settlement");
+		//budowanie raportu i transakcji
 		for(int i = 0; i < cnt; i++){
 			if (checked.get(i)){
 				addToRaport(peopleNames[i]);
@@ -117,6 +139,17 @@ public class RemovePerson extends Activity {
 			MainScreen.showDialog(getString(R.string.no_checked), this);
 			return;
 		}
+		Data.actWal.trans.add(t);
+		
+		//usuwanie osob
+		for(int i = 0; i < cnt; i++){
+			if (checked.get(i)){
+				if (!Data.actWal.removePerson(peopleNames[i])){
+					throw new Exception("Problem removing people");
+				}
+			}
+		}
+		
 		AlertDialog.Builder build = new AlertDialog.Builder(this);
 			build.setMessage(report)
 					.setPositiveButton("OK",

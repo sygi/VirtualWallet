@@ -61,7 +61,6 @@ public class CreateWallet extends Activity {
 		Intent i = new Intent(this, WalletScreen.class);
 		startActivity(i);
 		finish();
-		
 	}
 	
 	protected void onActivityResult (int requestCode, int resultCode, Intent data){

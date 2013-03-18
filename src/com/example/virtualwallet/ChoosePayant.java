@@ -47,6 +47,11 @@ public class ChoosePayant extends Activity {
 			return;
 		}
 		
+		if (amo >= 10e9){
+			MainScreen.showDialog(getString(R.string.joking), this);
+			return;
+		}
+		
 		if (rb.isChecked()){ //placi osoba
 			//TODO - sprawdzic, ze jeszcze nie placila = ?
 			AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
@@ -70,7 +75,6 @@ public class ChoosePayant extends Activity {
 			}
 		}
 		
-		//TODO sprawdzic, ze wprowadzone sa sensowne (<10^9) dane
 		res.putExtra("amount", amo);
 		
 		setResult(RESULT_OK, res);

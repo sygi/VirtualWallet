@@ -50,8 +50,8 @@ public class CreateTransaction extends Activity {
 			cost /= (Data.actWal.people.size()-1); //na osobe, zakladam, ze jest wirtualny portfel
 			
 			for(Person p : Data.actWal.people){
-				if (p.name != "wallet")
-				trans.charge.add(new Fee(p, -cost));
+				if (!p.name.equals("wallet"))
+					trans.charge.add(new Fee(p, -cost));
 			}
 		} else {
 			RadioButton rb2 = (RadioButton) findViewById(R.id.radioButton2);
