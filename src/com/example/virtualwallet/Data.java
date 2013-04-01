@@ -17,6 +17,7 @@ public class Data {
 	public static ArrayList<Wallet> wallet;
 	public static Wallet actWal;
 	public static DBHelper DBAccess;
+	public static Currency[] curs;
 	static void removeActWallet() throws Exception{
 		if (actWal == null){
 			throw new Exception("There's no actWal");

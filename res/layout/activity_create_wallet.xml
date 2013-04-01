@@ -32,16 +32,34 @@
        		android:layout_centerHorizontal="true"
        		android:text="@string/new_person"
        		android:onClick="getPerson" />
+
+	<TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_person"
+        android:layout_alignParentLeft="true"
+        android:text="@string/base_currency"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+	<Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true" />
+	
    <Button
        android:id="@+id/button1"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_below="@+id/add_person"
+       android:layout_below="@+id/spinner1"
        android:layout_centerHorizontal="true"
        android:text="@string/ok"
        android:onClick="forward" />
 	    
 	</RelativeLayout>
     </ScrollView>
+
+
 
 </RelativeLayout>

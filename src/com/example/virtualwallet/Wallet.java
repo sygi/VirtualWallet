@@ -12,8 +12,9 @@ public class Wallet {
 	private String name;
 	public Date creationTime;
 	public String log;
-	
-	
+	//TODO zmienic na defaultCurrencyNumber
+	public int currencyNum = 0;
+
 	Wallet(){
 		name = "";
 		creationTime = new Date();
