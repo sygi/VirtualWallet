@@ -1,9 +1,15 @@
 package com.example.virtualwallet;
 
-import android.annotation.SuppressLint;
-import android.os.Build;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +23,49 @@ public class SettingsActivity extends PreferenceActivity {
 		//change to onBuild headers for API >= 11
 		addPreferencesFromResource(R.xml.preferences);
 		// Show the Up button in the action bar.
+		ListPreference lp = (ListPreference) findPreference("pref_act_base_cur");
+		final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+		//TODO wydzielic kod
+		String defCur = sp.getString("pref_act_base_cur", "blabla");
+		lp.setSummary(defCur);
+		PreferenceCategory pc = (PreferenceCategory) findPreference("pref_other_cur");
+		for(Currency c: Data.curs){
+			if (!(c.cut.equals(defCur))){
+				CheckBoxPreference bcp = new CheckBoxPreference(this);
+				bcp.setTitle(c.name);
+				bcp.setSummary("1.45" + c.cut + " = 1" + defCur);
+				pc.addPreference(bcp);
+			}
+		}
+		final PreferenceActivity upper = this; 
+		final PreferenceCategory prefCat = (PreferenceCategory) findPreference("pref_other_cur");
+		lp.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+//				//String defaultCur = sp.getString("pref_act_base_cur", "blabla");
+				preference.setSummary((String)newValue);
+				prefCat.removeAll();
+				for(Currency c: Data.curs){
+					if (!(c.cut.equals((String)newValue))){
+						CheckBoxPreference cbp = new CheckBoxPreference(upper);
+						cbp.setTitle(c.name);
+						cbp.setSummary("21.45" + c.cut + " = 1" + (String)newValue);
+						prefCat.addPreference(cbp);
+					}
+				}			
+				return true;
+			}
+		});
+		
+		/*
+		sp.registerOnSharedPreferenceChangeListener(new OnSharedPreferenceChangeListener() {
+			@Override
+			public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+					String key) {
+
+			}
+		});*/
 	}
 
 	@Override

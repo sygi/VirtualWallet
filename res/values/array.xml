@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="currencies">
+        <item >polish złoty</item>
+        <item >united states dollar</item>
+        <item >euro</item>
+    </string-array>
+    <string-array name="values">
         <item >PLN</item>
         <item >USD</item>
         <item >EUR</item>
-    </string-array>
-    <string-array name="values">
-        <item >A</item>
-        <item >B</item>
-        <item >C</item>
     </string-array>
     
 </resources>

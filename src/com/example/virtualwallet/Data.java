@@ -32,6 +32,12 @@ public class Data {
 		throw new Exception("actWal not in wallet list");
 	}
 	static String readFromDatabase(){ 
+		//TODO zmienic, zeby naprawde to czytalo i pisalo z db
+		curs = new Currency[3];
+		curs[0] = new Currency("polish złoty", "PLN", new HashMap<String, Double>());
+		curs[1] = new Currency("united states dollar", "USD", new HashMap<String, Double>());
+		curs[2] = new Currency("euro", "EUR", new HashMap<String, Double>());
+		
 		wallet.clear();
 		actWal = null;
 		Map<Integer, Wallet> wallDict = new HashMap<Integer, Wallet>();
