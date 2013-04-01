@@ -1,25 +1,22 @@
 package com.example.virtualwallet;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends PreferenceActivity {
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings);
+	//	setContentView(R.layout.activity_settings);
+		//change to onBuild headers for API >= 11
+		addPreferencesFromResource(R.xml.preferences);
 		// Show the Up button in the action bar.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			// Show the Up button in the action bar.
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override

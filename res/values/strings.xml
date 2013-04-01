@@ -62,5 +62,9 @@
     <string name="title_activity_choose_subset">Choose some subset of people</string>
     <string name="at_least_one">Choose at least one person</string>
     <string name="base_currency">Base currency:</string>
+    <string name="other_currencies">Other currencies</string>
+    <string name="default_currency">Default currency</string>
+    <string name="default_currencyy">Default currency:</string>
+    <string name="choose_default_currency">Choose default currency</string>
 
 </resources>
