@@ -32,11 +32,22 @@ public class Data {
 		throw new Exception("actWal not in wallet list");
 	}
 	static String readFromDatabase(){ 
+		Log.d("sygi", "read from database");
 		//TODO zmienic, zeby naprawde to czytalo i pisalo z db
 		curs = new Currency[3];
-		curs[0] = new Currency("polish złoty", "PLN", new HashMap<String, Double>());
-		curs[1] = new Currency("united states dollar", "USD", new HashMap<String, Double>());
-		curs[2] = new Currency("euro", "EUR", new HashMap<String, Double>());
+		//PLN
+		HashMap<String, Double> mapa = new HashMap<String,Double>();
+		mapa.put("USD", 0.32);
+		mapa.put("EUR", 0.25);
+		curs[0] = new Currency("Polish złoty", "PLN", mapa);
+		mapa = new HashMap<String,Double>();
+		mapa.put("PLN", 3.01);
+		mapa.put("EUR", 0.70);
+		curs[1] = new Currency("United States dollar", "USD", mapa);
+		mapa = new HashMap<String,Double>();
+		mapa.put("PLN", 4.21);
+		mapa.put("USD", 1.32);
+		curs[2] = new Currency("Euro", "EUR", mapa);
 		
 		wallet.clear();
 		actWal = null;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="pref_currency">
     <PreferenceCategory 
         android:title="@string/default_currencyy"
         android:key="pref_base_currency">
@@ -9,13 +10,11 @@
             android:dialogTitle="Choose default currency"
             android:entries="@array/currencies"
             android:entryValues="@array/values"
+            android:defaultValue="PLN"
         />
     </PreferenceCategory>
     <PreferenceCategory 
         android:title="@string/other_currencies"
         android:key="pref_other_cur">
-        <CheckBoxPreference
-            android:title="druga waluta"
-            />
     </PreferenceCategory>
 </PreferenceScreen>

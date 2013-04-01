@@ -2,6 +2,8 @@ package com.example.virtualwallet;
 
 import java.util.HashMap;
 
+import android.util.Log;
+
 public class Currency {
 	public String name, cut;
 	private HashMap<String, Double> other;
@@ -11,6 +13,11 @@ public class Currency {
 		this.other = other;
 	}
 	public Double getOther(String otherCut){
+		if (otherCut.equals(cut))
+			return 1.0;
+		Log.d("sygi", "question " + cut + "to " + otherCut);
+	//	if (other.get(otherCut) == null)
+	//		return -1.0;
 		return other.get(otherCut);
 	}
 }

@@ -30,12 +30,13 @@ public class SettingsActivity extends PreferenceActivity {
 		String defCur = sp.getString("pref_act_base_cur", "blabla");
 		lp.setSummary(defCur);
 		PreferenceCategory pc = (PreferenceCategory) findPreference("pref_other_cur");
+		pc.removeAll();
 		for(Currency c: Data.curs){
 			if (!(c.cut.equals(defCur))){
-				CheckBoxPreference bcp = new CheckBoxPreference(this);
-				bcp.setTitle(c.name);
-				bcp.setSummary("1.45" + c.cut + " = 1" + defCur);
-				pc.addPreference(bcp);
+				CheckBoxPreference cbp = new CheckBoxPreference(this);
+				cbp.setTitle(c.name);
+				cbp.setSummary("1" + c.cut + " = " + c.getOther(defCur) + defCur);
+				pc.addPreference(cbp);
 			}
 		}
 		final PreferenceActivity upper = this; 
@@ -50,7 +51,7 @@ public class SettingsActivity extends PreferenceActivity {
 					if (!(c.cut.equals((String)newValue))){
 						CheckBoxPreference cbp = new CheckBoxPreference(upper);
 						cbp.setTitle(c.name);
-						cbp.setSummary("21.45" + c.cut + " = 1" + (String)newValue);
+						cbp.setSummary("1" + c.cut + " = " + c.getOther((String)newValue) + (String)newValue);
 						prefCat.addPreference(cbp);
 					}
 				}			

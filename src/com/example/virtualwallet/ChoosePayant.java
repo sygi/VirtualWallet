@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 
 public class ChoosePayant extends Activity {
 
@@ -22,6 +23,8 @@ public class ChoosePayant extends Activity {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, peopleNames);
 		AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
 		tv.setAdapter(adapter);
+		Spinner spin = (Spinner) findViewById(R.id.spinner1);
+		spin.setSelection(Data.actWal.currencyNum);
 	}
 
 	@Override
@@ -42,6 +45,14 @@ public class ChoosePayant extends Activity {
 			return;
 		}
 		amo = Double.valueOf(sum.getText().toString());
+		Spinner spin = (Spinner) findViewById(R.id.spinner1);
+		String curName = (String)spin.getSelectedItem();
+		for(Currency c: Data.curs){
+			if (c.cut.equals(curName)){
+				amo *= c.getOther((String)(spin.getItemAtPosition(Data.actWal.currencyNum)));
+				Log.d("sygi", "changed currency");
+			}
+		}
 		if (amo <= 0.0){
 			MainScreen.showDialog(getString(R.string.negative_value), this);
 			return;

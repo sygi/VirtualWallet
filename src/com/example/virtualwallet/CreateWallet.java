@@ -2,7 +2,9 @@ package com.example.virtualwallet;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -29,11 +31,17 @@ public class CreateWallet extends Activity {
 		setContentView(R.layout.activity_create_wallet);
 		wal = new Wallet();
 		personList = (RelativeLayout) findViewById(R.id.person_name_layout);
-		String[] currencies = {"PLN", "USD", "EUR"};
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
-		Spinner sp = (Spinner) findViewById(R.id.spinner1);
-		sp.setAdapter(adapter);
-		sp.setSelection(0);
+		/*String[] currencies = {"PLN", "USD", "EUR"};
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);*/
+		Spinner spin = (Spinner) findViewById(R.id.spinner1);
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		spin.setSelection(0);
+		for(int i = 0; i < spin.getCount(); i++){
+			if (spin.getItemAtPosition(i).equals(sp.getString("pref_act_base_cur", "PLN")))
+				spin.setSelection(i);
+		}
+		//TODO default currency
+		//sp.setSelection(0);
 	}
 
 	@Override
@@ -64,6 +72,8 @@ public class CreateWallet extends Activity {
 			return;
 		}
 		wal.setName(et.getText().toString());
+		Spinner spin = (Spinner) findViewById(R.id.spinner1);
+		wal.currencyNum = spin.getSelectedItemPosition(); 
 		Data.wallet.add(wal);
 		Data.actWal = wal;
 		
