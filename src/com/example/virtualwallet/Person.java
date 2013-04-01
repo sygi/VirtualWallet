@@ -29,11 +29,11 @@ public class Person {
 			return ""; //nieladnie, moznaby wymyslec cos lepszego
 		}
 		if (paid == 0.0){ //TODO zmienic na < eps
-			return name + " <font color=\"blue\">" + paid + "</font><br/>";			
+			return name + " <font color=\"blue\">" + String.format("%.2f", paid) + "</font><br/>";			
 		}
 		if (paid > 0.0){
-			return name + " <font color=\"green\">" + paid + "</font><br/>";
+			return name + " <font color=\"green\">" + String.format("%.2f", paid) + "</font><br/>";
 		}
-		return name + " <font color=\"red\">" + paid + "</font><br/>";
+		return name + " <font color=\"red\">" + String.format("%.2f", paid) + "</font><br/>";
 	}
 }
