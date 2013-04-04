@@ -4,61 +4,66 @@
     android:layout_height="match_parent"
     tools:context=".MainScreen" >
 
-    <LinearLayout
+    <TableLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical" >
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/hello_world" />
-
+       <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/new_wallet"
             android:onClick="newWallet" />
+        </TableRow>
 
+                   <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/load_wallet"
             android:onClick="loadWallet" />
+        </TableRow>
 	
+                      <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 	    <Button
 	        android:id="@+id/button3"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
 	        android:text="@string/settings"
 	        android:onClick="settings" />
-	    
+	    </TableRow>
+	    <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 	    <Button
 	        android:id="@+id/button4"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
 	        android:text="@string/credits"
 	        android:onClick="authors" />
-	    
+	    </TableRow>
+	    <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 	    <Button
 	        android:id="@+id/button5"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
 	        android:text="@string/exit"
 	        android:onClick="exit" />
+	    </TableRow>
 	    <!--  
 	     <Button
 	        android:id="@+id/button6"
@@ -77,7 +82,7 @@
 	        android:onClick="debWrite" />
 	    -->
 	        
-    </LinearLayout>
+     </TableLayout>
 
 
 

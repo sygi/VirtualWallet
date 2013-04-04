@@ -25,54 +25,81 @@
         android:text="."
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-     <Button
-         android:id="@+id/button1"
+     
+     
+   
+	 
+	  
+
+
+     <TableLayout
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_below="@id/person_table"
          android:layout_centerHorizontal="true"
+         android:layout_below="@id/person_table" >
+
+         <TableRow
+             android:id="@+id/tableRow1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" >
+             <Button
+         android:id="@+id/button1"
          android:text="@string/new_trans"
          android:onClick="newTransaction" />
-     <Button
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/tableRow2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" >
+             
+             <Button
          android:id="@+id/button2"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@id/button1"
-         android:layout_centerHorizontal="true"
          android:text="@string/new_person"
          android:onClick="addPerson" />
-     <Button
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/tableRow3"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" >
+               <Button
          android:id="@+id/button3"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@id/button2"
          android:text="@string/rem_person" 
-         android:layout_centerHorizontal="true"
          android:onClick="removePerson"/>
-	 <Button
+         </TableRow>
+
+         <TableRow
+             android:id="@+id/tableRow4"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" >
+               <Button
          android:id="@+id/button4"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_below="@id/button3"
-         android:layout_centerHorizontal="true"
          android:text="@string/log" 
          android:onClick="showHistory"/>
-	  <Button
+         </TableRow>
+         <TableRow
+             android:id="@+id/tableRow5"  
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
+             <Button
          android:id="@+id/button5"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@id/button4"
-         android:layout_centerHorizontal="true"
          android:text="@string/remove_wallet" 
          android:onClick="removeWallet"/>
-     <Button
+         </TableRow>
+         <TableRow 
+             android:id="@+id/tableRow6"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content">
+               <Button
          android:id="@+id/button6"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@id/button5"
-         android:layout_centerHorizontal="true"
          android:text="@string/exit"
-         android:onClick="exit" />
+         android:onClick="exit" />   
+             
+         </TableRow>
+     </TableLayout>
     
 </RelativeLayout>
 </ScrollView>
