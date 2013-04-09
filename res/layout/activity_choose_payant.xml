@@ -51,6 +51,7 @@
         android:text="@string/ok"
         android:onClick="exit" />
 
+    <!-- 
     <AutoCompleteTextView
         android:id="@+id/payantName"
         android:layout_width="wrap_content"
@@ -64,6 +65,7 @@
         android:imeOptions="actionNext">
         <requestFocus />
     </AutoCompleteTextView>
+    -->
 
     <Spinner
         android:id="@+id/spinner1"
@@ -72,5 +74,14 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/sum"
         android:entries="@array/values" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/radioGroup1"
+        android:prompt="@string/choose_payant"
+        android:background="@android:drawable/edit_text" />
 
 </RelativeLayout>

@@ -15,13 +15,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 //w tej klasie nie ustawilem parentClass, nie wiem, czy to cos daje?
 public class CreateWallet extends Activity {
 
 	//TODO zrobic tak, zeby ok bylo na samym dole, ale zeby sie nie scrollowalo
 	Wallet wal;
-	RelativeLayout personList;
+	TableLayout personList;
 	private int personIterator = 10004;
 	public final static int CREATE_PERSON = 12;
 	
@@ -30,7 +32,8 @@ public class CreateWallet extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_wallet);
 		wal = new Wallet();
-		personList = (RelativeLayout) findViewById(R.id.person_name_layout);
+		//personList = (RelativeLayout) findViewById(R.id.person_name_layout);
+		personList = (TableLayout) findViewById(R.id.peopleList);
 		/*String[] currencies = {"PLN", "USD", "EUR"};
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);*/
 		Spinner spin = (Spinner) findViewById(R.id.spinner1);
@@ -81,46 +84,7 @@ public class CreateWallet extends Activity {
 		startActivity(i);
 		finish();
 	}
-	
-	int nearestAbove(int number){
-		number += 20000;
-		for(int i = -1; i > -100; i--){
-			if (findViewById(number + i) != null)
-				return number + i;
-		}
-		return -1;
-	}
-	
-	int nearestBelow(int number){
-		number += 20000;
-		for(int i = 1; i < 100; i++){
-			if (findViewById(number + i) != null)
-				return number + i;
-		}
-		return R.id.add_person;
-	}
-	
-	void removePerson(int number){
-		Log.d("sygi", "removing" + number);
-		TextView tv = (TextView) findViewById(number);
-		String nm = tv.getText().toString();
-		wal.removePerson(nm);
-		
-		personList.removeView(findViewById(20000 + number));
-		int above = nearestAbove(number), below = nearestBelow(number);
-		RelativeLayout.LayoutParams belowLP = new RelativeLayout.LayoutParams
-				(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-		
-		View belowView = findViewById(below);
-		personList.removeView(belowView);
-		if (above == -1)
-			belowLP.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		else
-			belowLP.addRule(RelativeLayout.BELOW, above);
-		Log.d("sygi", "below: " + below + " above: " + above);
-		personList.addView(belowView, belowLP);
-	}
-	
+
 	protected void onActivityResult (int requestCode, int resultCode, Intent data){
 		if (resultCode == RESULT_CANCELED){
 			Log.d("sygi", "result cancelled");
@@ -135,60 +99,35 @@ public class CreateWallet extends Activity {
 					return;
 				}
 			}
-			LinearLayout ll = new LinearLayout(this);
-			ll.setId(personIterator + 20000);
-			ll.setOrientation(LinearLayout.HORIZONTAL);
-			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams
-					(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-			lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+			
+			TableRow row = new TableRow(this);
+			row.setId(personIterator + 20000);
+			TableRow.LayoutParams lp = new TableRow.LayoutParams
+					(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
 			
 			
 			TextView tv = new TextView(this);
 			tv.setId(personIterator);
 			tv.setText(data.getStringExtra("name"));
-			LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams
-					(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			
-			ll.addView(tv, llp);
+			row.addView(tv);
 			Button remove = new Button(this);
-			remove.setId(10000 + personIterator);
+			
 			final int id = personIterator;
 			remove.setText("remove"); //TODO hard coded string
 			remove.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Log.d("sygi", "remove clicked");
-					removePerson(id);
+					TextView tv = (TextView) findViewById(id);
+					String nm = tv.getText().toString();
+					wal.removePerson(nm);
+					personList.removeView(findViewById(20000 + id));
 				}
 			});
-			ll.addView(remove, llp);
+			row.addView(remove);
 			
-			//TODO - zrobic tak, zeby ladnie wygladalo :P
-			//TODO przycisk do usuwania osob z listy
-			
-			boolean found = false;
-			for(int i = -1; i>-100; i--){
-				if (findViewById(personIterator + i) != null){
-					lp.addRule(RelativeLayout.BELOW, 20000 + personIterator + i);
-					found = true;
-					break;
-				}
-			}
-			if (!found)
-				lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-			
-			
-			Button ok = (Button) findViewById(R.id.add_person);
-			Log.d("sygi", "but" + ok.getText());
-			personList.removeView(ok);
-			RelativeLayout.LayoutParams buttonP = new RelativeLayout.LayoutParams
-					(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-			buttonP.addRule(RelativeLayout.BELOW, 20000 + personIterator);
-			personList.addView(ok, buttonP);
-			
-			//lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-			
-			personList.addView(ll, lp);
+			personList.addView(row, lp);
 			wal.addPerson(new Person(data.getStringExtra("name"), data.getStringExtra("mail")));
 			personIterator++;
 		}

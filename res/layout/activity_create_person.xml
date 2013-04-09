@@ -1,45 +1,48 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreatePerson" >
 
+    <TableRow
+        android:gravity="center_horizontal" >
     <EditText
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:inputType="textPersonName"
         android:hint="@string/person_name" >
-
+        <!--android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"-->
         <requestFocus />
     </EditText>
-
+	</TableRow>
+	<TableRow 
+	    android:gravity="center_horizontal">
     <EditText
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_centerHorizontal="true"
-        android:inputType="textEmailAddress"
+        android:layout_height="wrap_content" 
+		android:inputType="textEmailAddress"
         android:hint="@string/mail" />
-
+    </TableRow>
+	<TableRow 
+	    android:gravity="center_horizontal">
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2"
-        android:layout_centerHorizontal="true"
         android:text="@string/read_contacts"
         android:onClick="contacts" />
+    </TableRow>
+    <TableRow
+        android:gravity="center_horizontal">
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
         android:text="@string/ok"
         android:onClick="send" />
+    </TableRow>
 
-</RelativeLayout>
+</TableLayout>

@@ -24,6 +24,14 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical" >
+	    
+	    <TableLayout  
+	        android:id="@+id/peopleList"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerHorizontal="true">
+	        
+	    </TableLayout>
 
 	    <Button
        		android:id="@+id/add_person"
@@ -31,7 +39,8 @@
        		android:layout_height="wrap_content"
        		android:layout_centerHorizontal="true"
        		android:text="@string/new_person"
-       		android:onClick="getPerson" />
+       		android:onClick="getPerson"
+       		android:layout_below="@id/peopleList" />
 
 	<TextView
         android:id="@+id/textView1"

@@ -20,8 +20,9 @@ public class ChoosePayant extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_payant);
 		peopleNames = Data.actWal.getNames();
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, peopleNames);
-		AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, peopleNames);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		Spinner tv = (Spinner) findViewById(R.id.spinner2);
 		tv.setAdapter(adapter);
 		Spinner spin = (Spinner) findViewById(R.id.spinner1);
 		spin.setSelection(Data.actWal.currencyNum);
@@ -65,8 +66,9 @@ public class ChoosePayant extends Activity {
 		
 		if (rb.isChecked()){ //placi osoba
 			//TODO - sprawdzic, ze jeszcze nie placila = ?
-			AutoCompleteTextView tv = (AutoCompleteTextView) findViewById(R.id.payantName);
-			boolean found = false;
+			//to chyba mialo znaczyc, ze nie ma jej jeszcze na liscie placacych za to cos
+			Spinner tv = (Spinner) findViewById(R.id.spinner2);
+			/*boolean found = false;
 			for(String s : peopleNames){
 				if (s.equals(tv.getText().toString()))
 					found = true;
@@ -74,9 +76,10 @@ public class ChoosePayant extends Activity {
 			if (!found){
 				MainScreen.showDialog(getString(R.string.no_such_person), this);
 				return;
-			}
-			res.putExtra("name", tv.getText().toString()); //wazne! bez .toString() nie dziala - problem z konwersja typow
-			Log.d("sygi", "wybrano osobe " + tv.getText());
+			}*/
+			
+			res.putExtra("name", tv.getSelectedItem().toString()); //wazne! bez .toString() nie dziala - problem z konwersja typow
+			Log.d("sygi", "wybrano osobe " + tv.getSelectedItem());
 		} else {
 			Log.d("sygi", "wybrano placenie z portfela");
 			res.putExtra("name", "wallet");

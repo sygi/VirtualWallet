@@ -6,11 +6,11 @@
     <string name="settings">Settings</string>
     <string name="new_wallet">New wallet</string>
     <string name="load_wallet">Load wallet</string>
-    <string name="authors">Michalina Pacholska, Jakub Sygnowski, March 2013</string>
+    <string name="authors">Michalina Pacholska,\nJakub Sygnowski, March 2013</string>
     <string name="exit">Exit</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_credits">CreditsActivity</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_create_wallet">Create a new wallet</string>
     <string name="title_activity_load_wallet">Load a wallet</string>
@@ -66,5 +66,7 @@
     <string name="default_currency">Default currency</string>
     <string name="default_currencyy">Default currency:</string>
     <string name="choose_default_currency">Choose default currency</string>
+    <string name="debug">blablabla</string>
+    <string name="choose_payant">Choose a payant</string>
 
 </resources>
