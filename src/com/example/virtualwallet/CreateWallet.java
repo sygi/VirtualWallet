@@ -42,9 +42,7 @@ public class CreateWallet extends Activity {
 		for(int i = 0; i < spin.getCount(); i++){
 			if (spin.getItemAtPosition(i).equals(sp.getString("pref_act_base_cur", "PLN")))
 				spin.setSelection(i);
-		}
-		//TODO default currency
-		//sp.setSelection(0);
+		} //to chyba daloby sie zrobic ladniej, ustawiajac jakies wartosci w settings
 	}
 
 	@Override
@@ -67,7 +65,6 @@ public class CreateWallet extends Activity {
 	 */
 	public void forward(View view){
 		Log.d("sygi", "probuje skonczyc tworzenie portfela");
-		//TODO parsowanie roznych rzeczy, tworzenie portfela, etc
 		EditText et = (EditText) findViewById(R.id.wallet_name);
 		
 		if (et.getText().toString().equals("")){

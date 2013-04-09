@@ -13,7 +13,9 @@ public class Wallet {
 	public Date creationTime;
 	public String log;
 	public int currencyNum = 0;
-	public Currency baseCur;
+	//public Currency baseCur; gdyby jednak byla potrzeba,
+	//zeby kurs dla jednego portfela sie nie zmienial, to trzeba bedzie to odkomentowac
+	//i zapisywac ten kurs w bazie
 	public int activePeople = 0;
 
 	Wallet(){

@@ -18,6 +18,15 @@ public class Data {
 	public static Wallet actWal;
 	public static DBHelper DBAccess;
 	public static Currency[] curs;
+	
+	public static Currency getCur(String shortName){
+		for(Currency c: curs){
+			if (c.cut.equals(shortName))
+				return c;
+		}
+		return null;
+	}//wlasciwie teraz tego nie uzywam
+	
 	static void removeActWallet() throws Exception{
 		if (actWal == null){
 			throw new Exception("There's no actWal");
@@ -37,16 +46,16 @@ public class Data {
 		curs = new Currency[3];
 		//PLN
 		HashMap<String, Double> mapa = new HashMap<String,Double>();
-		mapa.put("USD", 0.32);
-		mapa.put("EUR", 0.25);
+		mapa.put("USD", 0.3168);
+		mapa.put("EUR", 0.2404);
 		curs[0] = new Currency("Polish złoty", "PLN", mapa);
 		mapa = new HashMap<String,Double>();
-		mapa.put("PLN", 3.01);
-		mapa.put("EUR", 0.70);
+		mapa.put("PLN", 3.1564);
+		mapa.put("EUR", 0.7663);
 		curs[1] = new Currency("United States dollar", "USD", mapa);
 		mapa = new HashMap<String,Double>();
-		mapa.put("PLN", 4.21);
-		mapa.put("USD", 1.32);
+		mapa.put("PLN", 4.1605);
+		mapa.put("USD", 1.3049);
 		curs[2] = new Currency("Euro", "EUR", mapa);
 		
 		wallet.clear();
@@ -61,7 +70,7 @@ public class Data {
 		while (!c.isAfterLast()){
 			Wallet w = new Wallet(c.getString(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_NAME)));
 			w.creationTime = new Date(1000 * c.getLong(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CREATION_DATE)));
-			w.baseCur = null;
+			/*w.baseCur = null;
 			for(Currency cr: curs){
 				if (cr.cut.equals(c.getString(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CURRENCY)))){
 					w.baseCur = cr;
@@ -69,6 +78,11 @@ public class Data {
 			}
 			if (w.baseCur == null){
 				Log.d("sygi", "blad, brak takiej waluty");
+			}*/
+			for(int i = 0; i < curs.length; i++){
+				if (curs[i].cut.equals(c.getString(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CURRENCY)))){
+					w.currencyNum = i; 
+				}
 			}
 			wallet.add(w);
 			wallDict.put(c.getInt(c.getColumnIndex(DBSchema.Wallet._ID)), w);
@@ -168,7 +182,7 @@ public class Data {
 			ContentValues val = new ContentValues();
 			val.put(DBSchema.Wallet.COLUMN_NAME_NAME, w.getName());
 			val.put(DBSchema.Wallet.COLUMN_NAME_CREATION_DATE, w.creationTime.getTime()/1000);
-			val.put(DBSchema.Wallet.COLUMN_NAME_CURRENCY, w.baseCur.cut);
+			val.put(DBSchema.Wallet.COLUMN_NAME_CURRENCY, curs[w.currencyNum].cut);
 			long walletId = db.insert(DBSchema.Wallet.TABLE_NAME, null, val);
 			//czyzby problem z synchronizacja?
 
