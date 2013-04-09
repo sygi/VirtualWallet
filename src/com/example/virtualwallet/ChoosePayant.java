@@ -7,10 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -112,7 +109,8 @@ public class ChoosePayant extends Activity {
 		rb.setChecked(true);
 	}
 	
-	void clickSpinner(View view){
+	public void clickSpinner(View view){
+		Log.d("sygi", "person radiobutton clicked");
 		payantSpinner.performClick();
 	}
 
