@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -15,6 +18,7 @@ import android.widget.Spinner;
 public class ChoosePayant extends Activity {
 
 	private String[] peopleNames;
+	private Spinner payantSpinner;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,8 +26,16 @@ public class ChoosePayant extends Activity {
 		peopleNames = Data.actWal.getNames();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, peopleNames);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		Spinner tv = (Spinner) findViewById(R.id.spinner2);
-		tv.setAdapter(adapter);
+		payantSpinner = (Spinner) findViewById(R.id.spinner2);
+		payantSpinner.setAdapter(adapter);
+		payantSpinner.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				checkPerson();
+				return false;
+			}
+		});
+		
 		Spinner spin = (Spinner) findViewById(R.id.spinner1);
 		spin.setSelection(Data.actWal.currencyNum);
 	}
@@ -67,7 +79,7 @@ public class ChoosePayant extends Activity {
 		if (rb.isChecked()){ //placi osoba
 			//TODO - sprawdzic, ze jeszcze nie placila = ?
 			//to chyba mialo znaczyc, ze nie ma jej jeszcze na liscie placacych za to cos
-			Spinner tv = (Spinner) findViewById(R.id.spinner2);
+			//Spinner tv = (Spinner) findViewById(R.id.spinner2);
 			/*boolean found = false;
 			for(String s : peopleNames){
 				if (s.equals(tv.getText().toString()))
@@ -78,8 +90,8 @@ public class ChoosePayant extends Activity {
 				return;
 			}*/
 			
-			res.putExtra("name", tv.getSelectedItem().toString()); //wazne! bez .toString() nie dziala - problem z konwersja typow
-			Log.d("sygi", "wybrano osobe " + tv.getSelectedItem());
+			res.putExtra("name", payantSpinner.getSelectedItem().toString()); //wazne! bez .toString() nie dziala - problem z konwersja typow
+			Log.d("sygi", "wybrano osobe " + payantSpinner.getSelectedItem());
 		} else {
 			Log.d("sygi", "wybrano placenie z portfela");
 			res.putExtra("name", "wallet");
@@ -93,6 +105,15 @@ public class ChoosePayant extends Activity {
 		
 		setResult(RESULT_OK, res);
 		finish();
+	}
+	
+	void checkPerson(){
+		RadioButton rb = (RadioButton) findViewById(R.id.radio0);
+		rb.setChecked(true);
+	}
+	
+	void clickSpinner(View view){
+		payantSpinner.performClick();
 	}
 
 }
