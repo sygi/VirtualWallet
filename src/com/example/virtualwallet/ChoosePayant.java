@@ -32,6 +32,7 @@ public class ChoosePayant extends Activity {
 				return false;
 			}
 		});
+		Log.d("sygi", "utworzylem juz spinner");
 		
 		Spinner spin = (Spinner) findViewById(R.id.spinner1);
 		spin.setSelection(Data.actWal.currencyNum);

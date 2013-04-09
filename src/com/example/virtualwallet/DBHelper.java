@@ -9,7 +9,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "wallet.db";
 	public DBHelper(Context context) {
-		super(context, DB_NAME, null, 5);
+		super(context, DB_NAME, null, 6);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -17,8 +17,9 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		final String CREATE_WALLET =
 		"CREATE TABLE " + DBSchema.Wallet.TABLE_NAME + " (" +
-		DBSchema.Wallet._ID + " INTEGER PRIMARY KEY, " + 
-		DBSchema.Wallet.COLUMN_NAME_NAME + " TEXT, " + 
+		DBSchema.Wallet._ID + " INTEGER PRIMARY KEY," + 
+		DBSchema.Wallet.COLUMN_NAME_NAME + " TEXT," + 
+		DBSchema.Wallet.COLUMN_NAME_CURRENCY + " TEXT," + 
 		DBSchema.Wallet.COLUMN_NAME_CREATION_DATE + " INTEGER);";
 		
 		final String CREATE_PERSON =
@@ -27,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		DBSchema.Person.COLUMN_NAME_NAME + " TEXT," +
 		DBSchema.Person.COLUMN_NAME_MAIL + " TEXT," +
 		DBSchema.Person.COLUMN_NAME_PAID + " REAL," +
+		DBSchema.Person.COLUMN_NAME_ACTIVE + " INTEGER," +
 		DBSchema.Person.COLUMN_NAME_WALLET_ID + " INTEGER," +
 		"FOREIGN KEY(" + DBSchema.Person.COLUMN_NAME_WALLET_ID + 
 		") REFERENCES " + DBSchema.Wallet.TABLE_NAME + "(" +

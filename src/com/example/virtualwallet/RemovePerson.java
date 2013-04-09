@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.View;
@@ -35,26 +36,30 @@ public class RemovePerson extends Activity {
 		return true;
 	}
 	private Person biggestDept(){
+		Log.d("sygi", "biggestDept ");
 		Double actBest = 0.01;
 		Person res = null;
 		for(Person p : Data.actWal.people){
-			if (p.paid < actBest){
+			if (p.active && p.paid < actBest){
 				actBest = p.paid;
 				res = p;
 			}
 		}
+		Log.d("sygi", "ma " + res.name);
 		return res;
 	}
 	
 	private Person highestAccount(){
+		Log.d("sygi", "highestAccount ");
 		Double actBest = -0.01;
 		Person res = null;
 		for(Person p : Data.actWal.people){
-			if (p.paid > actBest){
+			if (p.active && p.paid > actBest){
 				actBest = p.paid;
 				res = p;
 			}
 		}
+		Log.d("sygi", "ma " + res.name);
 		return res;
 	}
 	
@@ -73,11 +78,11 @@ public class RemovePerson extends Activity {
 		}
 		//TODO - dopisac robienie zmian w portfelu przez transakcje
 		if (p.paid > 0.0){
-			report += p.name + " has paid " + p.paid + " too much, so (s)he gets:\n";
-			while(p.paid > 0.0){
+			report += p.name + " has paid " + String.format("%.2f", p.paid) + " too much, so (s)he gets:\n";
+			while(p.paid > 0.01){
 				Person loser = biggestDept();
 				if (loser.paid + p.paid > 0.0){
-					report += -loser.paid + " from " + loser.name + "\n";
+					report += String.format("%.2f", -loser.paid) + " from " + loser.name + "\n";
 					Fee f = new Fee(p, loser.paid);
 					t.charge.add(f);
 					f = new Fee(loser, -loser.paid);
@@ -89,29 +94,33 @@ public class RemovePerson extends Activity {
 					t.charge.add(f);
 					f = new Fee(loser, p.paid);
 					t.charge.add(f);
-					report += p.paid + " from " + loser.name + "\n";
+					report += String.format("%.2f", p.paid) + " from " + loser.name + "\n";
 					loser.paid += p.paid;
 					p.paid = 0.0;
 				}
 			}
 			//tu potencjalnie sie moga dziac zle rzeczy
 		} else {
-			report += p.name + " has paid " + p.paid + " too little, so (s)he owes:\n";
-			while(p.paid < 0.0){
+			report += p.name + " has paid " + String.format("%.2f", p.paid) + " too little, so (s)he owes:\n";
+			while(p.paid < -0.01){
 				Person winner = highestAccount();
+				Log.d("sygi", "winner ma " + winner.paid + ", a osoba " + p.paid);
 				if (winner.paid + p.paid < 0.0){
+					Log.d("sygi", "to za malo");
 					Fee f = new Fee(winner, -winner.paid);
 					t.charge.add(f);
 					f = new Fee(p, winner.paid);
 					t.charge.add(f);
-					report += winner.paid + " to " + winner.name + "\n";
+					report += String.format("%.2f", winner.paid) + " to " + winner.name + "\n";
 					p.paid += winner.paid;
 					winner.paid = 0.0;
 				} else {
-					report += -p.paid + " to " + winner.name + "\n";
+					Log.d("sygi", "to wystarczy");
+					report += String.format("%.2f", -p.paid) + " to " + winner.name + "\n";
 					Fee f = new Fee(winner, p.paid);
 					t.charge.add(f);
 					f = new Fee(p, -p.paid);
+					t.charge.add(f);
 					winner.paid += p.paid;
 					p.paid = 0.0;
 				}

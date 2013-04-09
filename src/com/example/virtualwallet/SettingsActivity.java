@@ -33,7 +33,7 @@ public class SettingsActivity extends PreferenceActivity {
 		pc.removeAll();
 		for(Currency c: Data.curs){
 			if (!(c.cut.equals(defCur))){
-				CheckBoxPreference cbp = new CheckBoxPreference(this);
+				Preference cbp = new Preference(this);
 				cbp.setTitle(c.name);
 				cbp.setSummary("1" + c.cut + " = " + c.getOther(defCur) + defCur);
 				pc.addPreference(cbp);
@@ -49,7 +49,7 @@ public class SettingsActivity extends PreferenceActivity {
 				prefCat.removeAll();
 				for(Currency c: Data.curs){
 					if (!(c.cut.equals((String)newValue))){
-						CheckBoxPreference cbp = new CheckBoxPreference(upper);
+						Preference cbp = new Preference(upper);
 						cbp.setTitle(c.name);
 						cbp.setSummary("1" + c.cut + " = " + c.getOther((String)newValue) + (String)newValue);
 						prefCat.addPreference(cbp);

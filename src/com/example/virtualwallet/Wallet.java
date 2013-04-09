@@ -13,6 +13,8 @@ public class Wallet {
 	public Date creationTime;
 	public String log;
 	public int currencyNum = 0;
+	public Currency baseCur;
+	public int activePeople = 0;
 
 	Wallet(){
 		name = "";
@@ -20,6 +22,7 @@ public class Wallet {
 		people = new ArrayList<Person>();
 		people.add(new Person("wallet")); //zawsze pierwsza osoba jest wallet
 		trans = new ArrayList<Transaction>();
+		activePeople = 0;
 	}
 	
 	Wallet(String name){
@@ -27,26 +30,31 @@ public class Wallet {
 		creationTime = new Date();
 		people = new ArrayList<Person>();
 		trans = new ArrayList<Transaction>();
+		activePeople = 0;
 	}
 	
 	public String[] getNames(){
-		if (people.get(0).name.equals("wallet")){
-			String[] tab = new String[people.size() - 1];
-			for(int i = 1; i < people.size(); i++){
-				tab[i - 1] = people.get(i).name;
+		Log.d("sygi", "activePeople = " + activePeople);
+		String[] tab = new String[activePeople];
+		int iter = 0;
+		for(int i = 1; i < people.size(); i++){
+			if (people.get(i).active){
+				Log.d("sygi", "person: " + people.get(i).name);
+				tab[iter++] = people.get(i).name;
 			}
-			return tab;
 		}
+		return tab;
 		//na wypadek kompatybilnosci wstecz, gdybym usunal 'wallet'
-		String tab[] = new String[people.size()];
+		/*String tab[] = new String[people.size()];
 		for(int i = 0; i < people.size(); i++){
 			tab[i] = people.get(i).name;
 		}
-		return tab;
+		return tab;*/
 	}
 	
 	public void addPerson(Person a){
 		people.add(a);
+		activePeople++;
 	}
 	
 	public void addTransaction(Transaction a){
@@ -68,7 +76,9 @@ public class Wallet {
 	public boolean removePerson(String name){
 		for(Person p: people){
 			if(p.name.equals(name)){
-				people.remove(p);
+				activePeople--;
+				p.active = false;
+				//people.remove(p);
 				return true;
 			}
 		}

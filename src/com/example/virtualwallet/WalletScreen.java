@@ -36,6 +36,7 @@ public class WalletScreen extends Activity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 		actualize();
+		Log.d("sygi", "activePeople = " + Data.actWal.activePeople);
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class WalletScreen extends Activity {
 		TextView table = (TextView) findViewById(R.id.person_table);
 		String state = "";
 		for(Person p : Data.actWal.people){
-			if (!p.name.equals("wallet"))
+			if (!p.name.equals("wallet") && p.active)
 				state += p;
 		}
 		table.setText(Html.fromHtml(state));
@@ -87,7 +88,6 @@ public class WalletScreen extends Activity {
 	public void newTransaction(View view){
 		Intent i = new Intent(this, CreateTransaction.class);
 		startActivityForResult(i, NEW_TRANS);
-		//actualize();
 	}
 	
 	public void addPerson(View view){
@@ -129,17 +129,6 @@ public class WalletScreen extends Activity {
 	
 	public void showHistory(View view){
 		MainScreen.showDialog(Data.actWal.getLog(), this);
-		//TODO - wywalic dialogi do osobnej klasy
-		/*
-		AlertDialog.Builder build = new AlertDialog.Builder(this);
-		build.setMessage(Data.actWal.getLog())
-				.setPositiveButton("OK",
-						new DialogInterface.OnClickListener() {
-							public void onClick(
-									DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						}).show();*/
 	}
 	
 	protected void onActivityResult (int requestCode, int resultCode, Intent data){
@@ -151,8 +140,18 @@ public class WalletScreen extends Activity {
 		if (requestCode == NEW_PERSON){
 			for(Person p : Data.actWal.people){
 				if (p.name.equals(data.getStringExtra("name"))){
-					MainScreen.showDialog(getString(R.string.person_exists), this);
-					return;
+					if (p.active){
+						MainScreen.showDialog(getString(R.string.person_exists), this);
+						return;
+					} else {
+						p.active = true;
+						Data.actWal.activePeople++;
+						p.mail = data.getStringExtra("mail");
+						//wlasciwie i tak powinno byc zero (po rozliczeniu)
+						p.paid = 0.0;
+						actualize();
+						return;
+					}
 				}
 			}
 			Data.actWal.addPerson(new Person(data.getStringExtra("name"), data.getStringExtra("mail")));

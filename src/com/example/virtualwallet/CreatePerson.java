@@ -47,8 +47,6 @@ public class CreatePerson extends Activity {
 			MainScreen.showDialog(getString(R.string.person_wallet_name), this);
 			return;
 		}
-		//TODO zabezpieczyc sie przed pustym nm.getText().toString()
-		//TODO i przed osoba o imieniu 'wallet'
 		i.putExtra("name", nm.getText().toString());
 		i.putExtra("mail", ml.getText().toString());
 		setResult(RESULT_OK, i);

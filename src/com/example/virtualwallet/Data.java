@@ -54,17 +54,27 @@ public class Data {
 		Map<Integer, Wallet> wallDict = new HashMap<Integer, Wallet>();
 		//String tymczasowo, zeby wypisywac wydruki kontrolne w glownym oknie
 		SQLiteDatabase db = DBAccess.getReadableDatabase();
-		String projW[] = {DBSchema.Wallet._ID, DBSchema.Wallet.COLUMN_NAME_NAME, DBSchema.Wallet.COLUMN_NAME_CREATION_DATE};
+		String projW[] = {DBSchema.Wallet._ID, DBSchema.Wallet.COLUMN_NAME_NAME, DBSchema.Wallet.COLUMN_NAME_CURRENCY, DBSchema.Wallet.COLUMN_NAME_CREATION_DATE};
 		Cursor c = db.query(DBSchema.Wallet.TABLE_NAME, projW, null, null, null, null, null);
 		String res = "WALLET:\n";
 		c.moveToFirst();
 		while (!c.isAfterLast()){
 			Wallet w = new Wallet(c.getString(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_NAME)));
 			w.creationTime = new Date(1000 * c.getLong(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CREATION_DATE)));
+			w.baseCur = null;
+			for(Currency cr: curs){
+				if (cr.cut.equals(c.getString(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CURRENCY)))){
+					w.baseCur = cr;
+				}
+			}
+			if (w.baseCur == null){
+				Log.d("sygi", "blad, brak takiej waluty");
+			}
 			wallet.add(w);
 			wallDict.put(c.getInt(c.getColumnIndex(DBSchema.Wallet._ID)), w);
 			res += c.getInt(c.getColumnIndex(DBSchema.Wallet._ID)) + " ";
 			res += c.getString(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_NAME)) + " ";
+			res += c.getString(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CURRENCY)) + " ";
 			res += c.getInt(c.getColumnIndex(DBSchema.Wallet.COLUMN_NAME_CREATION_DATE)) + "\n";
 			c.moveToNext();
 		}
@@ -72,18 +82,31 @@ public class Data {
 		
 		res += "\nPERSON:\n";
 		Map<Integer, Person> perDict = new HashMap<Integer, Person>();
-		String projP[] = {DBSchema.Person._ID, DBSchema.Person.COLUMN_NAME_NAME, DBSchema.Person.COLUMN_NAME_MAIL, DBSchema.Person.COLUMN_NAME_PAID, DBSchema.Person.COLUMN_NAME_WALLET_ID};
+		String projP[] = {DBSchema.Person._ID, DBSchema.Person.COLUMN_NAME_NAME, DBSchema.Person.COLUMN_NAME_MAIL, DBSchema.Person.COLUMN_NAME_PAID, DBSchema.Person.COLUMN_NAME_ACTIVE, DBSchema.Person.COLUMN_NAME_WALLET_ID};
 		c = db.query(DBSchema.Person.TABLE_NAME, projP, null, null, null, null, null);
 		c.moveToFirst();
 		while (!c.isAfterLast()){
 			Person p = new Person(c.getString(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_NAME)),
 					c.getString(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_MAIL)));
+			if (c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_ACTIVE)) == 1){
+				p.active = true;
+			} else {
+				p.active = false;
+			}
 			perDict.put(c.getInt(c.getColumnIndex(DBSchema.Person._ID)), p);
 			wallDict.get(c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID))).people.add(p);
+			if (p.active){
+				wallDict.get(c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID))).activePeople++;
+			}
 			p.paid = c.getDouble(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_PAID));
 			res += c.getInt(c.getColumnIndex(DBSchema.Person._ID)) + 
 					" name: " + c.getString(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_NAME)) + "\n";
 			res += "mail:" + c.getString(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_MAIL)) + "\n";
+			if (c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_ACTIVE)) == 1){
+				res += "active\n";
+			} else {
+				res += "not active\n";
+			}
 			res += "paid:" + c.getDouble(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_PAID)) +
 					", walletId = " + c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID)) + "\n";
 			c.moveToNext();
@@ -145,6 +168,7 @@ public class Data {
 			ContentValues val = new ContentValues();
 			val.put(DBSchema.Wallet.COLUMN_NAME_NAME, w.getName());
 			val.put(DBSchema.Wallet.COLUMN_NAME_CREATION_DATE, w.creationTime.getTime()/1000);
+			val.put(DBSchema.Wallet.COLUMN_NAME_CURRENCY, w.baseCur.cut);
 			long walletId = db.insert(DBSchema.Wallet.TABLE_NAME, null, val);
 			//czyzby problem z synchronizacja?
 
@@ -153,6 +177,10 @@ public class Data {
 				val.put(DBSchema.Person.COLUMN_NAME_NAME, p.name);
 				val.put(DBSchema.Person.COLUMN_NAME_MAIL, p.mail);
 				val.put(DBSchema.Person.COLUMN_NAME_PAID, p.paid);
+				if (p.active)
+					val.put(DBSchema.Person.COLUMN_NAME_ACTIVE, 1);
+				else
+					val.put(DBSchema.Person.COLUMN_NAME_ACTIVE, 0);
 				val.put(DBSchema.Person.COLUMN_NAME_WALLET_ID, walletId);
 				Log.d("sygi", "person" + p.name + "idwal" + walletId);
 				db.insert(DBSchema.Person.TABLE_NAME, null, val);

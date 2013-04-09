@@ -8,6 +8,7 @@ public class DBSchema {
 		public static final String TABLE_NAME = "wallet";
 		public static final String COLUMN_NAME_NAME = "name";
 		public static final String COLUMN_NAME_CREATION_DATE = "creation";
+		public static final String COLUMN_NAME_CURRENCY = "currency";
 	}
 	public static final class Person implements BaseColumns{
 		private Person() {}
@@ -16,6 +17,7 @@ public class DBSchema {
 		public static final String COLUMN_NAME_WALLET_ID = "walletId";
 		public static final String COLUMN_NAME_PAID = "paid";
 		public static final String COLUMN_NAME_MAIL = "mail";
+		public static final String COLUMN_NAME_ACTIVE = "active";
 	}
 	public static final class Transaction implements BaseColumns{
 		private Transaction() {}
