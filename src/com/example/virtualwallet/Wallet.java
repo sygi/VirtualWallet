@@ -29,6 +29,7 @@ public class Wallet {
 		this.name = name;
 		creationTime = new Date();
 		people = new ArrayList<Person>();
+		people.add(new Person("wallet"));
 		trans = new ArrayList<Transaction>();
 		activePeople = 0;
 	}
@@ -105,14 +106,14 @@ public class Wallet {
 			log += "payants:\n";
 			for(Fee f : t.charge){
 				if (f.paid > 0.0){
-					log += f.toString();
+					log += f;
 				}
 			}
 			log += "\n";
 			log += "users:\n";
 			for(Fee f : t.charge){
 				if (f.paid < 0.0){
-					log += f.who.name + " (" + -f.paid +")\n";
+					log += f.who.name + " (" + String.format("%.2f", -f.paid) +")\n";
 				}
 			}
 			

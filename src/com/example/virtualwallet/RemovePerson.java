@@ -40,7 +40,7 @@ public class RemovePerson extends Activity {
 		Double actBest = 0.01;
 		Person res = null;
 		for(Person p : Data.actWal.people){
-			if (p.active && p.paid < actBest){
+			if ((p.active || p.name.equals("wallet")) && p.paid < actBest){
 				actBest = p.paid;
 				res = p;
 			}
@@ -62,8 +62,10 @@ public class RemovePerson extends Activity {
 		Log.d("sygi", "ma " + res.name);
 		return res;
 	}
-	
-	private void addToRaport(String person){
+	/**
+	 * @return czy dodalem ta osobe do raportu 
+	 */
+	private boolean addToRaport(String person){
 		Person p = null;
 		try {
 			p = Data.actWal.findPerson(person);
@@ -74,7 +76,7 @@ public class RemovePerson extends Activity {
 		//to chyba kiepskie uzycie wyjatkow 
 		if (Math.abs(p.paid) < 0.02){
 			report += p.name + " has paid the same amount as (s)he gets, so (s)he owes nothing\n";
-			return;
+			return false;
 		}
 		//TODO - dopisac robienie zmian w portfelu przez transakcje
 		if (p.paid > 0.0){
@@ -126,7 +128,7 @@ public class RemovePerson extends Activity {
 				}
 			}
 		}
-		
+		return true;
 	}
 
 	public void exit(View view) throws Exception {
@@ -136,11 +138,13 @@ public class RemovePerson extends Activity {
 		int cnt = lv.getCount();
 		int countChecked = 0;
 		SparseBooleanArray checked = lv.getCheckedItemPositions();
+		boolean someData = false;
 		t = new Transaction("Settlement");
 		//budowanie raportu i transakcji
 		for(int i = 0; i < cnt; i++){
 			if (checked.get(i)){
-				addToRaport(peopleNames[i]);
+				if (addToRaport(peopleNames[i]))
+					someData = true;
 				countChecked++;
 			}
 		}
@@ -148,7 +152,8 @@ public class RemovePerson extends Activity {
 			MainScreen.showDialog(getString(R.string.no_checked), this);
 			return;
 		}
-		Data.actWal.trans.add(t);
+		if (someData)
+			Data.actWal.trans.add(t);
 		
 		//usuwanie osob
 		for(int i = 0; i < cnt; i++){
@@ -187,7 +192,4 @@ public class RemovePerson extends Activity {
 	public void uncheckAll(View view){
 		checkUncheck(false);
 	}
-	
-	
-
 }
