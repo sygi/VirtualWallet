@@ -1,8 +1,11 @@
 package com.example.virtualwallet;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -15,6 +18,8 @@ public class RemovePerson extends Activity {
 
 	private String[] peopleNames;
 	private String report = "";
+	private String mail = "";
+	private ArrayList<String> addresses = new ArrayList<String>();
 	private Transaction t;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,14 @@ public class RemovePerson extends Activity {
 		return res;
 	}
 	
+	private void placeToMail(Person pers){
+		if (pers.mail.equals(""))
+			return;
+		if (!addresses.contains(pers.mail)){
+			addresses.add(pers.mail);
+		}
+	}
+	
 	private Person highestAccount(){
 		Log.d("sygi", "highestAccount ");
 		Double actBest = -0.01;
@@ -78,13 +91,18 @@ public class RemovePerson extends Activity {
 			report += p.name + " has paid the same amount as (s)he gets, so (s)he owes nothing\n";
 			return false;
 		}
-		//TODO - dopisac robienie zmian w portfelu przez transakcje
+		mail += "Settlement of " + p.name + ":\n======================\n";
+		placeToMail(p);
+		//TODO - poprawic -0.0 u osób
+		//TODO zrobic to ladniej (report i mail)
 		if (p.paid > 0.0){
 			report += p.name + " has paid " + String.format("%.2f", p.paid) + " too much, so (s)he gets:\n";
+			mail += p.name + " has paid " + String.format("%.2f", p.paid) + " too much, so (s)he gets:\n";
 			while(p.paid > 0.01){
 				Person loser = biggestDept();
 				if (loser.paid + p.paid > 0.0){
 					report += String.format("%.2f", -loser.paid) + " from " + loser.name + "\n";
+					mail += String.format("%.2f", -loser.paid) + " from " + loser.name + "\n";
 					Fee f = new Fee(p, loser.paid);
 					t.charge.add(f);
 					f = new Fee(loser, -loser.paid);
@@ -97,13 +115,16 @@ public class RemovePerson extends Activity {
 					f = new Fee(loser, p.paid);
 					t.charge.add(f);
 					report += String.format("%.2f", p.paid) + " from " + loser.name + "\n";
+					mail += String.format("%.2f", p.paid) + " from " + loser.name + "\n";
 					loser.paid += p.paid;
 					p.paid = 0.0;
 				}
+				placeToMail(loser);
 			}
 			//tu potencjalnie sie moga dziac zle rzeczy
 		} else {
 			report += p.name + " has paid " + String.format("%.2f", p.paid) + " too little, so (s)he owes:\n";
+			mail += p.name + " has paid " + String.format("%.2f", p.paid) + " too little, so (s)he owes:\n";
 			while(p.paid < -0.01){
 				Person winner = highestAccount();
 				Log.d("sygi", "winner ma " + winner.paid + ", a osoba " + p.paid);
@@ -114,11 +135,13 @@ public class RemovePerson extends Activity {
 					f = new Fee(p, winner.paid);
 					t.charge.add(f);
 					report += String.format("%.2f", winner.paid) + " to " + winner.name + "\n";
+					mail += String.format("%.2f", winner.paid) + " to " + winner.name + "\n";
 					p.paid += winner.paid;
 					winner.paid = 0.0;
 				} else {
 					Log.d("sygi", "to wystarczy");
 					report += String.format("%.2f", -p.paid) + " to " + winner.name + "\n";
+					mail += String.format("%.2f", -p.paid) + " to " + winner.name + "\n";
 					Fee f = new Fee(winner, p.paid);
 					t.charge.add(f);
 					f = new Fee(p, -p.paid);
@@ -126,14 +149,18 @@ public class RemovePerson extends Activity {
 					winner.paid += p.paid;
 					p.paid = 0.0;
 				}
+				placeToMail(winner);
 			}
 		}
+		mail += "\n";
 		return true;
 	}
 
 	public void exit(View view) throws Exception {
 		//TODO przerzucic do to R.strings, zeby zrobic lokalizacje
 		report = "Settlements report\n"; 
+		mail = "Report:\n\n";
+		addresses = new ArrayList<String>();
 		ListView lv = (ListView) findViewById(R.id.listView1);
 		int cnt = lv.getCount();
 		int countChecked = 0;
@@ -143,8 +170,10 @@ public class RemovePerson extends Activity {
 		//budowanie raportu i transakcji
 		for(int i = 0; i < cnt; i++){
 			if (checked.get(i)){
-				if (addToRaport(peopleNames[i]))
+				if (addToRaport(peopleNames[i])){
 					someData = true;
+					mail += "\n";
+				}
 				countChecked++;
 			}
 		}
@@ -163,7 +192,34 @@ public class RemovePerson extends Activity {
 				}
 			}
 		}
-		
+		if (someData && addresses.size() > 0){
+			AlertDialog.Builder build = new AlertDialog.Builder(this);
+			build.setMessage(report)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								public void onClick(
+										DialogInterface dialog, int id) {
+									dialog.cancel();
+									setResult(RESULT_OK);
+									finish();
+								}
+							})
+					.setNeutralButton("Send through mail", 
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+									Intent i = new Intent(Intent.ACTION_SEND);
+									i.setType("message/rfc822");
+									i.putExtra(Intent.EXTRA_EMAIL, addresses.toArray(new String[0]));
+									i.putExtra(Intent.EXTRA_SUBJECT, "Settlement of " + Data.actWal.getName());
+									i.putExtra(Intent.EXTRA_TEXT, mail);
+									startActivity(Intent.createChooser(i, "Send mail..."));
+									dialog.cancel();
+									setResult(RESULT_OK);
+									finish();
+								}
+							})
+					.show();
+		} else {
 		AlertDialog.Builder build = new AlertDialog.Builder(this);
 			build.setMessage(report)
 					.setPositiveButton("OK",
@@ -175,6 +231,8 @@ public class RemovePerson extends Activity {
 									finish();
 								}
 							}).show();
+		}
+			
 	}
 	
 	public void checkAll(View view){

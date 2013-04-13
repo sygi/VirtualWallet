@@ -21,6 +21,7 @@ import android.widget.EditText;
  */
 public class CreatePerson extends Activity {
 
+	//TODO sprawdzanie, ze mail jest valid
 	static final int PICK_CONTACT = 11;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
