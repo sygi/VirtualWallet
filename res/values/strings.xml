@@ -68,5 +68,15 @@
     <string name="choose_default_currency">Choose default currency</string>
     <string name="debug">blablabla</string>
     <string name="choose_payant">Choose a payant</string>
+    <string name="groups">Groups</string>
+    <string name="title_activity_group_view">Groups of people</string>
+    <string name="new_group">Add a new group</string>
+    <string name="people_from_group">Add people from group</string>
+    <string name="title_activity_create_group">Create a group</string>
+    <string name="finish">Finish</string>
+    <string name="group_name">Group name</string>
+    <string name="person_exists_in_group">Person with this name already exists in that group</string>
+    <string name="no_group_name">Please enter name for that group</string>
+    <string name="title_activity_choose_group">Choose a group</string>
 
 </resources>

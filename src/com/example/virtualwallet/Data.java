@@ -18,6 +18,7 @@ public class Data {
 	public static Wallet actWal;
 	public static DBHelper DBAccess;
 	public static Currency[] curs;
+	public static ArrayList<PeopleGroup> groups;
 	
 	public static Currency getCur(String shortName){
 		for(Currency c: curs){

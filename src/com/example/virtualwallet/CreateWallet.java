@@ -26,6 +26,7 @@ public class CreateWallet extends Activity {
 	TableLayout personList;
 	private int personIterator = 10004;
 	public final static int CREATE_PERSON = 12;
+	public final static int CHOOSE_GROUP = 23;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,57 @@ public class CreateWallet extends Activity {
 		Intent i = new Intent(this, CreatePerson.class);
 		startActivityForResult(i, CREATE_PERSON);
 	}
+	
+	public void addGroup(View view){
+		//TODO tutaj wybrac grupe
+		Intent i = new Intent(this, ChooseGroup.class);
+		startActivityForResult(i, CHOOSE_GROUP);
+	}
+	
+	private boolean addPerson(String name, String mail){
+		for(Person p : wal.people){
+			if (p.name.equals(name)){
+				MainScreen.showDialog(getString(R.string.person_exists), this);
+				return false;
+			}
+		}
+		
+		TableRow row = new TableRow(this);
+		row.setId(personIterator + 20000);
+		TableRow.LayoutParams lp = new TableRow.LayoutParams
+				(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+		
+		
+		TextView tv = new TextView(this);
+		tv.setId(personIterator);
+		tv.setText(name);
+		
+		row.addView(tv);
+		Button remove = new Button(this);
+		
+		final int id = personIterator;
+		remove.setText("remove"); //TODO hard coded string
+		remove.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Log.d("sygi", "remove clicked");
+				TextView tv = (TextView) findViewById(id);
+				String nm = tv.getText().toString();
+				for(Person p : wal.people){ //tutaj musze naprawde usuwac
+					if (p.name.equals(nm))
+						wal.people.remove(p);
+				}
+				personList.removeView(findViewById(20000 + id));
+			}
+		});
+		row.addView(remove);
+		
+		personList.addView(row, lp);
+		wal.addPerson(new Person(name, mail));
+		personIterator++;
+		return true;
+	}
+	
 	
 	/**
 	 * Parsuje to, co użytkownik wpisał i przechodzi (lub nie)
@@ -90,43 +142,40 @@ public class CreateWallet extends Activity {
 		
 		if (requestCode == CREATE_PERSON){
 			Log.d("sygi", "wybrano osobe");
-			for(Person p : wal.people){
-				if (p.name.equals(data.getStringExtra("name"))){
-					MainScreen.showDialog(getString(R.string.person_exists), this);
-					return;
+			addPerson(data.getStringExtra("name"), data.getStringExtra("mail"));
+		} else if (requestCode == CHOOSE_GROUP){
+			Log.d("sygi", "wybrano grupe");
+			PeopleGroup pg = null;
+			for(PeopleGroup i : Data.groups){
+				if (i.name.equals(data.getStringExtra("name"))){
+					pg = i;
+					break;
 				}
 			}
-			
-			TableRow row = new TableRow(this);
-			row.setId(personIterator + 20000);
-			TableRow.LayoutParams lp = new TableRow.LayoutParams
-					(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-			
-			
-			TextView tv = new TextView(this);
-			tv.setId(personIterator);
-			tv.setText(data.getStringExtra("name"));
-			
-			row.addView(tv);
-			Button remove = new Button(this);
-			
-			final int id = personIterator;
-			remove.setText("remove"); //TODO hard coded string
-			remove.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Log.d("sygi", "remove clicked");
-					TextView tv = (TextView) findViewById(id);
-					String nm = tv.getText().toString();
-					wal.removePerson(nm);
-					personList.removeView(findViewById(20000 + id));
+			if (pg == null){
+				Log.d("sygi", "nie ma grupy o takiej nazwie");
+				return;
+			}
+			int added = 0, duplicates = 0;
+			boolean found;
+			for(Person p : pg.people){
+				found = false;
+				for(Person q : wal.people){
+					if (q.name.equals(p.name)){
+						Log.d("sygi", q.name + " jest juz w portfelu");
+						found = true;
+						duplicates++;
+						break;
+					}
 				}
-			});
-			row.addView(remove);
-			
-			personList.addView(row, lp);
-			wal.addPerson(new Person(data.getStringExtra("name"), data.getStringExtra("mail")));
-			personIterator++;
+				if (!found){
+					addPerson(p.name, p.mail);
+					added++;
+				}
+			}
+			if (added == 0 || duplicates == 0)
+				return; // nie pisz nic
+			MainScreen.showDialog("Added " + added + " people, found " + duplicates + " duplicates.", this);
 		}
 	}
 

@@ -82,6 +82,18 @@
             android:name="com.example.virtualwallet.ChooseSubset"
             android:label="@string/title_activity_choose_subset" >
         </activity>
+        <activity
+            android:name="com.example.virtualwallet.GroupView"
+            android:label="@string/title_activity_group_view" >
+        </activity>
+        <activity
+            android:name="com.example.virtualwallet.CreateGroup"
+            android:label="@string/title_activity_create_group" >
+        </activity>
+        <activity
+            android:name="com.example.virtualwallet.ChooseGroup"
+            android:label="@string/title_activity_choose_group" >
+        </activity>
     </application>
 
 </manifest>

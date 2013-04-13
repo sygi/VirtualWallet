@@ -30,6 +30,7 @@ public class MainScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_screen);
 		Data.wallet = new ArrayList<Wallet>();
+		Data.groups = new ArrayList<PeopleGroup>();
 		Data.DBAccess = new DBHelper(this); 
 		Data.readFromDatabase();
 	}
@@ -72,6 +73,12 @@ public class MainScreen extends Activity {
 		 startActivity(i);
 	 }
 	 
+	 public void openGroups(View view){
+		 Intent i = new Intent(this, GroupView.class);
+		 startActivity(i);
+	 }
+	 
+	 //DEBUG
 	 public void debRead(View view){
 		 showDialog(Data.readFromDatabase(), this);
 	 }
@@ -79,5 +86,7 @@ public class MainScreen extends Activity {
 	 public void debWrite(View view){
 		 Data.saveToDatabase();
 	 }
+	 
+	 
 
 }

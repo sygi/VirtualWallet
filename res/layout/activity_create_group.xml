@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"  
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".CreateGroup" >
+    
+	<EditText
+	    android:id="@+id/group_name"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:hint="@string/group_name"
+	    android:inputType="text" >
+
+	    <requestFocus/>
+
+    </EditText>
+
+    <ScrollView
+        android:id="@+id/person_name_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="1" >
+	    
+	    <TableLayout  
+	        android:id="@+id/peopleList"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content">
+	        
+	    </TableLayout>
+    </ScrollView>
+        
+	<TableLayout 
+	    android:id="@+id/buttons_table"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content">
+	    <TableRow >
+	    <Button
+       		android:id="@+id/add_person"
+       		android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		android:layout_gravity="center_horizontal"
+       		android:text="@string/new_person"
+       		android:onClick="getPerson" />
+	    </TableRow>
+	    
+	    <TableRow >
+	           <Button
+       android:id="@+id/button1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/finish"
+       android:onClick="forward"/>
+	    </TableRow>
+	    
+	</TableLayout>
+   
+</LinearLayout>
