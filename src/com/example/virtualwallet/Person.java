@@ -27,6 +27,13 @@ public class Person {
 			active = false;
 	}
 	
+	Person(Person other){
+		this.name = other.name;
+		this.paid = other.paid;
+		this.mail = other.mail;
+		this.active = other.active;
+	}
+	
 	@Override
 	public String toString(){
 		//TODO - skracanie z dokladnoscia do 2 miejsc po przecinku

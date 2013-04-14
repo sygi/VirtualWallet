@@ -24,4 +24,12 @@ public class PeopleGroup {
 		}
 		return false;
 	}
+	
+	public PeopleGroup(PeopleGroup other){
+		this.name = other.name;
+		this.people = new ArrayList<Person>();
+		for(Person p : other.people){
+			people.add(new Person(p));
+		}
+	}
 }

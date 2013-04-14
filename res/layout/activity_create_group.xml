@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:focusableInTouchMode="true"
+    android:descendantFocusability="beforeDescendants"
     tools:context=".CreateGroup" >
     
 	<EditText
@@ -12,8 +14,6 @@
 	    android:layout_height="wrap_content"
 	    android:hint="@string/group_name"
 	    android:inputType="text" >
-
-	    <requestFocus/>
 
     </EditText>
 

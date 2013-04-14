@@ -44,7 +44,7 @@
         </activity>
         <activity
             android:name="com.example.virtualwallet.CreateWallet"
-            android:label="@string/title_activity_create_wallet" >
+            android:label="@string/title_activity_create_wallet" android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="com.example.virtualwallet.LoadWallet"

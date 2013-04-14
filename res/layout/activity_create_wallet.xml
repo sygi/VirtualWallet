@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:focusableInTouchMode="true"
+    android:descendantFocusability="beforeDescendants"
     tools:context=".CreateWallet" >
     
 	<EditText
@@ -12,8 +14,6 @@
 	    android:layout_height="wrap_content"
 	    android:hint="@string/wallet_name"
 	    android:inputType="text" >
-
-	    <requestFocus/>
 
     </EditText>
 

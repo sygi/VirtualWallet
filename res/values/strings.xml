@@ -78,5 +78,7 @@
     <string name="person_exists_in_group">Person with this name already exists in that group</string>
     <string name="no_group_name">Please enter name for that group</string>
     <string name="title_activity_choose_group">Choose a group</string>
+    <string name="wallet_dup_name">There already exists a wallet with that name</string>
+    <string name="group_dup_name">There already exists a group with that name</string>
 
 </resources>

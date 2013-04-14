@@ -124,6 +124,13 @@ public class CreateWallet extends Activity {
 			return;
 		}
 		wal.setName(et.getText().toString());
+		for(Wallet w : Data.wallet){
+			if (w.getName().equals(wal.getName())){
+				MainScreen.showDialog(getString(R.string.wallet_dup_name), this);
+				return;
+			}
+		}
+		
 		Spinner spin = (Spinner) findViewById(R.id.spinner1);
 		wal.currencyNum = spin.getSelectedItemPosition(); 
 		Data.wallet.add(wal);
