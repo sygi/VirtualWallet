@@ -24,6 +24,7 @@ public class WalletScreen extends Activity {
 	private static final int NEW_PERSON = 10;
 	private static final int NEW_TRANS = 19;
 	private static final int REMOVE_PERSON = 17;
+	private static final int NEW_GROUP = 21;
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,11 @@ public class WalletScreen extends Activity {
 		//aktualizacja - w onResult
 	}
 	
+	public void addGroup(View view){
+		Intent i = new Intent(this, ChooseGroup.class);
+		startActivityForResult(i, NEW_GROUP);
+	}
+	
 	public void removeWallet(View view){
 		 AlertDialog.Builder build = new AlertDialog.Builder(this);
 			build.setMessage(getString(R.string.sure))
@@ -162,6 +168,50 @@ public class WalletScreen extends Activity {
 			actualize();
 		} else if (requestCode == REMOVE_PERSON){
 			actualize();
+		} else if (requestCode == NEW_GROUP){
+			Log.d("sygi", "wybrano grupe");
+			PeopleGroup pg = null;
+			for(PeopleGroup i : Data.groups){
+				if (i.name.equals(data.getStringExtra("name"))){
+					pg = i;
+					break;
+				}
+			}
+			if (pg == null){
+				Log.d("sygi", "nie ma grupy o takiej nazwie");
+				return;
+			}
+			int added = 0, duplicates = 0;
+			boolean found;
+			for(Person p : pg.people){
+				found = false;
+				for(Person q : Data.actWal.people){
+					if (q.name.equals(p.name)){
+						Log.d("sygi", q.name + " jest juz w portfelu");
+						found = true;
+						if (!q.active){
+							q.active = true;
+							Data.actWal.activePeople++;
+							q.mail = data.getStringExtra("mail");
+							//wlasciwie i tak powinno byc zero (po rozliczeniu)
+							q.paid = 0.0;
+							added++;
+						} else {
+							duplicates++;
+							break;
+						}
+					}
+				}
+				if (!found){
+					Data.actWal.addPerson(new Person(p.name, p.mail));
+					added++;
+				}
+			}
+			actualize();
+			if (added == 0 || duplicates == 0)
+				return; // nie pisz nic
+			MainScreen.showDialog("Added " + added + " people, found " + duplicates + " duplicates.", this);
+			
 		}
 	}
 

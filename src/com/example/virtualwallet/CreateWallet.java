@@ -60,7 +60,6 @@ public class CreateWallet extends Activity {
 	}
 	
 	public void addGroup(View view){
-		//TODO tutaj wybrac grupe
 		Intent i = new Intent(this, ChooseGroup.class);
 		startActivityForResult(i, CHOOSE_GROUP);
 	}

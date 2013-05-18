@@ -60,6 +60,7 @@ public class Data {
 		curs[2] = new Currency("Euro", "EUR", mapa);
 		
 		wallet.clear();
+		groups.clear();
 		actWal = null;
 		Map<Integer, Wallet> wallDict = new HashMap<Integer, Wallet>();
 		//String tymczasowo, zeby wypisywac wydruki kontrolne w glownym oknie
@@ -109,9 +110,11 @@ public class Data {
 				p.active = false;
 			}
 			perDict.put(c.getInt(c.getColumnIndex(DBSchema.Person._ID)), p);
-			wallDict.get(c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID))).people.add(p);
-			if (p.active){
-				wallDict.get(c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID))).activePeople++;
+			if (!c.isNull(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID))){
+				wallDict.get(c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID))).people.add(p);
+				if (p.active){
+					wallDict.get(c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID))).activePeople++;
+				}
 			}
 			p.paid = c.getDouble(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_PAID));
 			res += c.getInt(c.getColumnIndex(DBSchema.Person._ID)) + 
@@ -122,8 +125,10 @@ public class Data {
 			} else {
 				res += "not active\n";
 			}
+			if (!c.isNull(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID))){
 			res += "paid:" + c.getDouble(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_PAID)) +
 					", walletId = " + c.getInt(c.getColumnIndex(DBSchema.Person.COLUMN_NAME_WALLET_ID)) + "\n";
+			}
 			c.moveToNext();
 		}
 		c.close();
@@ -161,6 +166,34 @@ public class Data {
 			c.moveToNext();
 		}
 		c.close();
+		
+		res += "\nGROUPS\n";
+		String projG[] = {DBSchema.Group._ID, DBSchema.Group.COLUMN_NAME_NAME};
+		Map<Integer, PeopleGroup> groupDict = new HashMap<Integer, PeopleGroup>();
+		c = db.query(DBSchema.Group.TABLE_NAME, projG, null, null, null, null, null);
+		c.moveToFirst();
+		while(!c.isAfterLast()){
+			PeopleGroup g = new PeopleGroup(c.getString(c.getColumnIndex(DBSchema.Group.COLUMN_NAME_NAME)));
+			groups.add(g);
+			groupDict.put(c.getInt(c.getColumnIndex(DBSchema.Group._ID)), g);
+			res += "\nid: " + c.getInt(c.getColumnIndex(DBSchema.Group._ID)) + 
+					" name: " + c.getString(c.getColumnIndex(DBSchema.Group.COLUMN_NAME_NAME)) + "\n";
+			c.moveToNext();
+		}
+		c.close();
+		
+		res += "\nBELONGINGS\n";
+		String projB[] = {DBSchema.Belonging._ID, DBSchema.Belonging.COLUMN_NAME_PERSON_ID, DBSchema.Belonging.COLUMN_NAME_GROUP_ID};
+		c = db.query(DBSchema.Belonging.TABLE_NAME, projB, null, null, null, null, null);
+		c.moveToFirst();
+		while (!c.isAfterLast()){
+			groupDict.get(c.getInt(c.getColumnIndex(DBSchema.Belonging.COLUMN_NAME_GROUP_ID))).people
+			.add(perDict.get(c.getInt(c.getColumnIndex(DBSchema.Belonging.COLUMN_NAME_PERSON_ID))));
+			//czy na pewno nie ma sposobu na usuniecie osoby = zepsucie tego, co tu jest?
+			c.moveToNext();
+		}
+		c.close();
+		
 		db.close();
 		Log.d("sygi", res);
 		return res;
@@ -175,6 +208,8 @@ public class Data {
 		}
 		}
 		//wyczyscic informacje z BD
+		db.delete(DBSchema.Belonging.TABLE_NAME, null, null);
+		db.delete(DBSchema.Group.TABLE_NAME, null, null);
 		db.delete(DBSchema.Fee.TABLE_NAME, null, null);
 		db.delete(DBSchema.Transaction.TABLE_NAME, null, null);
 		db.delete(DBSchema.Person.TABLE_NAME, null, null);
@@ -228,7 +263,26 @@ public class Data {
 				}
 			}
 		}
+		for(PeopleGroup g : groups){
+			ContentValues val = new ContentValues();
+			val.put(DBSchema.Group.COLUMN_NAME_NAME, g.name);
+			long groupId = db.insert(DBSchema.Group.TABLE_NAME, null, val);
+			for (Person p: g.people){
+				ContentValues pVal = new ContentValues();
+				pVal.put(DBSchema.Person.COLUMN_NAME_NAME, p.name);
+				pVal.put(DBSchema.Person.COLUMN_NAME_MAIL, p.mail);
+				pVal.put(DBSchema.Person.COLUMN_NAME_PAID, 0.0);
+				if (p.active)
+					pVal.put(DBSchema.Person.COLUMN_NAME_ACTIVE, 1);
+				else
+					pVal.put(DBSchema.Person.COLUMN_NAME_ACTIVE, 0);
+				long personId = db.insert(DBSchema.Person.TABLE_NAME, null, pVal);
+				ContentValues val2 = new ContentValues();
+				val2.put(DBSchema.Belonging.COLUMN_NAME_GROUP_ID, groupId);
+				val2.put(DBSchema.Belonging.COLUMN_NAME_PERSON_ID, personId);
+				db.insert(DBSchema.Belonging.TABLE_NAME, null, val2);
+			}
+		}
 		db.close();
-		
 	}
 }

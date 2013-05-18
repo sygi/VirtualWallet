@@ -9,7 +9,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "wallet.db";
 	public DBHelper(Context context) {
-		super(context, DB_NAME, null, 6);
+		super(context, DB_NAME, null, 7);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -57,17 +57,40 @@ public class DBHelper extends SQLiteOpenHelper {
 		") REFERENCES " + DBSchema.Person.TABLE_NAME + "(" + 
 		DBSchema.Person._ID + "));";
 		
+		final String CREATE_GROUP = 
+		"CREATE TABLE " + DBSchema.Group.TABLE_NAME + " (" +
+		DBSchema.Group._ID + " INTEGER PRIMARY KEY," +
+		DBSchema.Group.COLUMN_NAME_NAME + " TEXT);";
+		
+		final String CREATE_BELONGING =
+		"CREATE TABLE " + DBSchema.Belonging.TABLE_NAME + " (" +
+		DBSchema.Belonging._ID + " INTEGER PRIMARY KEY," + 
+		DBSchema.Belonging.COLUMN_NAME_PERSON_ID + " INTEGER," +
+		DBSchema.Belonging.COLUMN_NAME_GROUP_ID + " INTEGER," +
+		"FOREIGN KEY(" + DBSchema.Belonging.COLUMN_NAME_PERSON_ID + 
+		") REFERENCES " + DBSchema.Person.TABLE_NAME + "(" +
+		DBSchema.Person._ID + ")," +
+		"FOREIGN KEY(" + DBSchema.Belonging.COLUMN_NAME_GROUP_ID + 
+		") REFERENCES " + DBSchema.Group.TABLE_NAME + "(" +
+		DBSchema.Group._ID + "));";
+		
+		Log.d("sygi", CREATE_WALLET);
+		Log.d("sygi", CREATE_GROUP);
 		
 		db.execSQL(CREATE_WALLET);
 		db.execSQL(CREATE_PERSON);
 		db.execSQL(CREATE_TRANS);
 		db.execSQL(CREATE_FEE);
+		db.execSQL(CREATE_GROUP);
+		db.execSQL(CREATE_BELONGING);
 		db.execSQL("PRAGMA foreign_keys = ON;");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		Log.d("sygi", "Database - on upgrade");
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Belonging.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Group.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Fee.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Person.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Transaction.TABLE_NAME);
@@ -78,6 +101,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onDowngrade(SQLiteDatabase db, int oldV, int newV){
 		Log.d("sygi", "Database - on downgrade");
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Belonging.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Group.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Fee.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Person.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + DBSchema.Transaction.TABLE_NAME);

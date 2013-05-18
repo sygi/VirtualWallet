@@ -33,4 +33,15 @@ public class DBSchema {
 		public static final String COLUMN_NAME_PAID = "paid";
 		public static final String COLUMN_NAME_TRANS_ID = "transId";
 	}
+	public static final class Group implements BaseColumns{
+		private Group() {}
+		public static final String TABLE_NAME = "peopleGroup";
+		public static final String COLUMN_NAME_NAME = "name";	
+	}
+	public static final class Belonging implements BaseColumns{
+		private Belonging() {}
+		public static final String TABLE_NAME = "belongsto";
+		public static final String COLUMN_NAME_PERSON_ID = "personId";
+		public static final String COLUMN_NAME_GROUP_ID = "groupId";
+	}
 }

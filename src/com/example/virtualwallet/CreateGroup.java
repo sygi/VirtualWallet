@@ -95,7 +95,9 @@ public class CreateGroup extends Activity {
 		group.name = (et.getText().toString());
 		Intent inn = getIntent();
 		if (inn.getStringExtra("type") != null && inn.getStringExtra("type").equals("edit")){
-			if (group.name != origName){//zedytowano nazwe grupy
+			Log.d("sygi", "..edytowanie grupy");
+			if (!group.name.equals(origName)){//zedytowano nazwe grupy
+				Log.d("sygi", "zmieniono nazwe");
 			for(PeopleGroup pg : Data.groups){
 				if (pg.name.equals(group.name)){
 					MainScreen.showDialog(getString(R.string.group_dup_name), this);
