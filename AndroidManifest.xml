@@ -45,7 +45,8 @@
         </activity>
         <activity
             android:name="com.example.virtualwallet.CreateWallet"
-            android:label="@string/title_activity_create_wallet" android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_create_wallet" >
         </activity>
         <activity
             android:name="com.example.virtualwallet.LoadWallet"
@@ -69,8 +70,8 @@
         </activity>
         <activity
             android:name="com.example.virtualwallet.CreateTransaction"
-            android:label="@string/title_activity_create_transaction" 
-            android:screenOrientation="portrait">
+            android:label="@string/title_activity_create_transaction"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.example.virtualwallet.ChoosePayant"
@@ -96,6 +97,10 @@
         <activity
             android:name="com.example.virtualwallet.ChooseGroup"
             android:label="@string/title_activity_choose_group" >
+        </activity>
+        <activity
+            android:name="com.example.virtualwallet.PersonalSettlement"
+            android:label="@string/title_activity_personal_settlement" >
         </activity>
     </application>
 

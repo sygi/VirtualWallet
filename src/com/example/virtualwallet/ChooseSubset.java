@@ -44,7 +44,7 @@ public class ChooseSubset extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_choose_subset, menu);
-		return true;
+		return false;
 	}
 	
 	public void exit(View view){
